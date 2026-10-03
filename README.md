@@ -5,7 +5,7 @@ Interface du réseau social de voyage. Elle communique avec l'API Django.
 Cloner le projet:
 
 ```bash
-git clone [<url-du-frontend>](https://github.com/mayssajebali/TravelMate_FrontEnd.git)   # puis suivre les étapes ci-dessous
+git clone https://github.com/mayssajebali/TravelMate_FrontEnd.git   # puis suivre les étapes ci-dessous
 ```
 
 ## Lancer le projet

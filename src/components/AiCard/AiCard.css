@@ -1,0 +1,57 @@
+/* AI */
+
+.ai-card {
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+
+  background: linear-gradient(
+    120deg,
+    #eef8f6,
+    #f4f1ea
+  );
+
+  border: 1px solid var(--line);
+
+  border-radius: 16px;
+
+  padding: 16px 18px;
+
+  margin-bottom: 18px;
+}
+
+.ai-card .label {
+  font-size: 0.68rem;
+
+  letter-spacing: 0.05em;
+
+  text-transform: uppercase;
+
+  color: var(--turq);
+
+  font-weight: 800;
+}
+
+.ai-card p {
+  margin: 4px 0 0;
+
+  font-size: 0.92rem;
+}
+
+.ai-thumbs {
+  display: flex;
+
+  gap: 8px;
+
+  margin-left: auto;
+}
+
+.ai-thumbs span {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 10px;
+}
+

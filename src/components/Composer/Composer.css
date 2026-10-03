@@ -1,0 +1,79 @@
+.composer {
+  background: var(--card);
+
+  border: 1px solid var(--line);
+
+  border-radius: 18px;
+
+  padding: 16px 18px;
+
+  margin-bottom: 18px;
+}
+
+.composer .row1 {
+  display: flex;
+
+  gap: 12px;
+
+  align-items: center;
+}
+
+.composer input {
+  flex: 1;
+
+  border: 1px solid var(--line);
+
+  border-radius: 999px;
+
+  padding: 10px 16px;
+
+  font-family: inherit;
+
+  background: var(--bg);
+
+  outline: none;
+}
+
+.pills {
+  display: flex;
+
+  gap: 8px;
+
+  margin-top: 12px;
+
+  flex-wrap: wrap;
+}
+
+.pills span {
+  background: var(--bg);
+
+  border-radius: 999px;
+
+  padding: 6px 13px;
+
+  font-size: 0.78rem;
+
+  color: var(--soft);
+
+  font-weight: 600;
+}
+
+.postbtn {
+  margin-left: auto;
+
+  background: var(--ink);
+
+  color: white;
+
+  border: none;
+
+  border-radius: 999px;
+
+  padding: 6px 18px;
+
+  font-weight: 700;
+
+  font-size: 0.82rem;
+
+  cursor: pointer;
+}

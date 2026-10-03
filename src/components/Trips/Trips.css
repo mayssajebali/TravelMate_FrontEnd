@@ -1,0 +1,36 @@
+/* Utilise les variables de ton App.css si elles existent, sinon des valeurs par défaut */
+.trips-page{--t-card:var(--card,#fff);--t-line:var(--line,#ebe6dc);--t-ink:var(--ink,#1c2530);--t-soft:var(--soft,#727d87);--t-main:var(--turq,#20a793);--t-bg:var(--bg,#faf8f4)}
+.trips-page *{box-sizing:border-box}
+.trips-form h2,.trips-heading{font-size:1.05rem;font-weight:600;letter-spacing:-.01em;margin:0 0 12px;color:var(--t-ink)}
+.trips-heading{margin:22px 0 12px}
+.trips-form label{display:block;font-size:.78rem;font-weight:600;color:var(--t-soft);margin-top:12px}
+.trips-form label small{font-weight:400}
+.trips-form input,.trips-form textarea{display:block;width:100%;margin-top:4px;padding:10px 14px;border:1px solid var(--t-line);border-radius:12px;background:var(--t-bg);color:var(--t-ink);font:inherit;font-size:.9rem}
+.trips-form textarea{resize:vertical}
+.trips-form input:focus,.trips-form textarea:focus{outline:none;border-color:var(--t-main);background:var(--t-card)}
+.trips-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+.trips-error{background:#fdecea;color:#b3261e;border-radius:12px;padding:9px 12px;font-size:.85rem;margin-bottom:6px}
+.trips-buttons{display:flex;gap:10px;margin-top:16px}
+.trips-primary,.trips-ghost{border-radius:999px;padding:10px 22px;font:inherit;font-weight:700;font-size:.86rem;cursor:pointer;border:1px solid transparent}
+.trips-primary{background:var(--t-main);color:#fff}
+.trips-primary:disabled{opacity:.6;cursor:wait}
+.trips-ghost{background:var(--t-card);color:var(--t-ink);border-color:var(--t-line)}
+.trips-empty{padding:18px;text-align:center;color:var(--t-soft);font-size:.9rem;border:1px dashed var(--t-line);border-radius:16px}
+
+.trip-card{background:var(--t-card);border:1px solid var(--t-line);border-radius:16px;padding:16px 18px;margin-bottom:12px}
+.trip-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.trip-card h3{margin:0;font-size:1rem;font-weight:600;color:var(--t-ink)}
+.trip-dest{color:var(--t-soft);font-size:.85rem;margin-top:2px}
+.trip-status{font-size:.72rem;font-weight:700;padding:4px 11px;border-radius:999px;white-space:nowrap}
+.trip-status.upcoming{background:#eaf6f4;color:#157f6f}
+.trip-status.ongoing{background:#fff1da;color:#a05a00}
+.trip-status.past{background:#eee;color:#6b6b6b}
+.trip-meta{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:10px;font-size:.82rem;color:var(--t-soft)}
+.trip-desc{margin:10px 0 0;font-size:.9rem;line-height:1.5;white-space:pre-wrap;word-break:break-word;color:var(--t-ink)}
+.trip-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.trip-tags span{background:var(--t-bg);border:1px solid var(--t-line);border-radius:999px;padding:4px 11px;font-size:.76rem;font-weight:600;color:var(--t-ink)}
+.trip-actions{display:flex;gap:8px;margin-top:14px}
+.trip-actions button{border:1px solid var(--t-line);background:var(--t-card);color:var(--t-ink);border-radius:999px;padding:7px 16px;font:inherit;font-weight:700;font-size:.78rem;cursor:pointer}
+.trip-actions button:hover{background:var(--t-bg)}
+.trip-actions .danger{background:#fdecea;border-color:#fdecea;color:#c0392b}
+@media (max-width:620px){.trips-grid{grid-template-columns:1fr}}

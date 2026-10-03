@@ -1,0 +1,60 @@
+/* Style dédié au sidebar gauche — toutes les classes sont préfixées .lsb-
+   Il n'utilise plus .profile-mini, nav.side, .world-* de App.css (tu peux les supprimer). */
+
+.lsb{
+  --lsb-card:var(--card,#fff);
+  --lsb-line:var(--line,#ebe6dc);
+  --lsb-ink:var(--ink,#1c2530);
+  --lsb-soft:var(--soft,#727d87);
+  --lsb-main:var(--turq,#20a793);
+  --lsb-bg:var(--bg,#faf8f4);
+}
+
+.lsb-panel{
+  background:var(--lsb-card);
+  border:1px solid var(--lsb-line);
+  border-radius:16px;
+  padding:18px;
+  margin-bottom:16px;
+}
+
+/* ----- profil ----- */
+.lsb-profile{
+  display:flex;flex-direction:column;align-items:center;
+  width:100%;padding:0;border:0;background:none;
+  font:inherit;color:inherit;text-align:center;cursor:pointer;
+}
+.lsb-ava{
+  width:60px;height:60px;flex:none;margin-bottom:8px;
+  border-radius:50%;
+  display:grid;place-items:center;
+  color:#fff;font-size:1.3rem;font-weight:800;
+}
+.lsb-name{font-size:.95rem;font-weight:700;color:var(--lsb-ink)}
+.lsb-mail{margin-top:2px;color:var(--lsb-soft);font-size:.74rem;word-break:break-all}
+
+/* ----- navigation ----- */
+.lsb-nav{display:flex;flex-direction:column;margin-top:14px}
+.lsb-link{
+  display:flex;align-items:center;gap:10px;
+  width:100%;padding:9px 8px;
+  border:0;border-radius:10px;background:none;
+  color:var(--lsb-soft);
+  font:inherit;font-size:.87rem;font-weight:600;
+  text-align:left;cursor:pointer;
+  transition:background .15s,color .15s;
+}
+.lsb-link:hover:not(.soon){background:var(--lsb-bg);color:var(--lsb-ink)}
+.lsb-link.active{background:#eaf6f4;color:var(--lsb-main)}
+.lsb-link.soon{opacity:.45;cursor:default}
+
+.lsb-profile:focus-visible,
+.lsb-link:focus-visible{outline:2px solid var(--lsb-main);outline-offset:2px;border-radius:10px}
+
+/* ----- Ton monde ----- */
+.lsb-title{
+  margin:14px 8px 6px;
+  color:var(--lsb-soft);
+  font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;
+}
+.lsb-stats div{padding:5px 8px;font-size:.82rem;color:var(--lsb-ink)}

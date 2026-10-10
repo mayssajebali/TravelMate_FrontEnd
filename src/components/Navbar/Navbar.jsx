@@ -11,6 +11,7 @@ function gradientFor(key = '') {
 
 function Navbar({ user, onLogout }) {
   const name = user?.full_name ?? ''
+  const photo = user?.avatar_url
 
   return (
     <header className="top">
@@ -39,8 +40,13 @@ function Navbar({ user, onLogout }) {
         <span
           className={`ava ${gradientFor(user?.id)} avatar-small`}
           title={name}
+          style={photo ? {
+            backgroundImage: `url(${photo})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          } : undefined}
         >
-          {name.trim().charAt(0).toUpperCase()}
+          {photo ? '' : name.trim().charAt(0).toUpperCase()}
         </span>
 
         <button type="button" className="logout-btn" onClick={onLogout}>

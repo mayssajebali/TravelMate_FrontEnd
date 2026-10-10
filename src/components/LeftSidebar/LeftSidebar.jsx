@@ -25,14 +25,22 @@ const NAV = [
 
 function LeftSidebar({ user, stats = { trips: 0, upcoming: 0 }, section = 'feed', onNavigate }) {
   const name = user?.full_name ?? ''
+  const photo = user?.avatar_url
 
   return (
     <aside className="lsidebar lsb">
       <div className="lsb-panel">
 
         <button type="button" className="lsb-profile" onClick={() => onNavigate?.('profile')}>
-          <span className={`lsb-ava ${gradientFor(user?.id)}`}>
-            {name.trim().charAt(0).toUpperCase()}
+          <span
+            className={`lsb-ava ${gradientFor(user?.id)}`}
+            style={photo ? {
+              backgroundImage: `url(${photo})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            } : undefined}
+          >
+            {photo ? '' : name.trim().charAt(0).toUpperCase()}
           </span>
           <span className="lsb-name">{name}</span>
           <span className="lsb-mail">{user?.email}</span>

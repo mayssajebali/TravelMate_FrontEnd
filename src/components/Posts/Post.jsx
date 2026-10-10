@@ -79,10 +79,28 @@ function Post({ post, onDeleted, onSaveToggle }) {
     })
   }
 
+  const authorPhoto = p.author.avatar_url
+  const authorInitial = (p.author.full_name ?? '').trim().charAt(0).toUpperCase()
+
   return (
     <article className="post">
       <div className="post-head">
-        <span className={`ava ${gradientFor(p.author.id)} avatar-post`}></span>
+        <span
+          className={`ava ${gradientFor(p.author.id)} avatar-post`}
+          style={{
+            display: 'grid',
+            placeItems: 'center',
+            color: '#fff',
+            fontWeight: 700,
+            ...(authorPhoto ? {
+              backgroundImage: `url(${authorPhoto})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            } : {}),
+          }}
+        >
+          {authorPhoto ? '' : authorInitial}
+        </span>
         <div className="who">
           <b>{p.author.full_name}</b>
           <div>

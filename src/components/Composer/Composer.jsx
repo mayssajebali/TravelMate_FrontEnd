@@ -19,6 +19,8 @@ function Composer({ user, onPublish }) {
   const [error, setError] = useState('')
   const fileRef = useRef(null)
 
+  const photo = user?.avatar_url
+
   const pickImage = (e) => {
     const file = e.target.files?.[0]
     if (!file) return
@@ -55,7 +57,14 @@ function Composer({ user, onPublish }) {
   return (
     <div className="composer">
       <div className="row1">
-        <span className={`ava ${gradientFor(user?.id)} avatar-composer`}></span>
+        <span
+          className={`ava ${gradientFor(user?.id)} avatar-composer`}
+          style={photo ? {
+            backgroundImage: `url(${photo})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          } : undefined}
+        ></span>
         <input
           type="text"
           placeholder="Share something from your journey..."

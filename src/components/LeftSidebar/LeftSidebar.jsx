@@ -16,18 +16,17 @@ const NAV = [
   { icon: '🏠', label: 'Accueil', section: 'feed' },
   { icon: '✈️', label: 'Mes voyages', section: 'trips' },
   { icon: '👤', label: 'Mon profil', section: 'profile' },
-  { icon: '🧭', label: 'Explorer', section: null },
+  { icon: '🧭', label: 'Explorer', section: 'explore' },
   { icon: '👥', label: 'Travel Mates', section: null },
   { icon: '🌍', label: 'Communautés', section: null },
   { icon: '✉️', label: 'Messages', section: null },
-  { icon: '📌', label: 'Enregistrés', section: null },
+  { icon: '📌', label: 'Enregistrés', section: 'saved' },
 ]
 
 function LeftSidebar({ user, stats = { trips: 0, upcoming: 0 }, section = 'feed', onNavigate }) {
   const name = user?.full_name ?? ''
 
   return (
-    // la classe "lsidebar" garde la règle responsive de App.css (masqué < 1080px)
     <aside className="lsidebar lsb">
       <div className="lsb-panel">
 

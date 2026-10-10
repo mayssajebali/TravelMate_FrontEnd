@@ -1,0 +1,64 @@
+/* ---------- Explorer ---------- */
+.dest-page { display: grid; gap: 16px; }
+.dest-header h2 { margin: 4px 4px 2px; font-size: 1.35rem; }
+.dest-header p { margin: 0 4px; color: #888; font-size: .9rem; }
+.dest-search { width: 100%; padding: 11px 18px; border: 1px solid var(--line, #ebe6dc); border-radius: 999px;
+  font: inherit; background: #fff; }
+.dest-filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.dest-sort { margin-left: auto; display: flex; gap: 6px; }
+.dest-chip { background: #fff; border: 1px solid var(--line, #ebe6dc); border-radius: 999px; padding: 6px 14px;
+  font: inherit; font-size: .82rem; font-weight: 600; color: #666; cursor: pointer; }
+.dest-chip:hover { background: #f6f3ec; }
+.dest-chip.active { background: #1fae9c; border-color: #1fae9c; color: #fff; }
+.dest-more { justify-self: center; }
+.dest-state { text-align: center; color: #888; padding: 24px 8px; margin: 0; line-height: 1.5; }
+.dest-error { color: #c0392b; font-size: .85rem; margin: 4px 0 0; }
+
+.dest-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 16px; }
+.dest-card { background: #fff; border: 1px solid var(--line, #ebe6dc); border-radius: 18px; overflow: hidden;
+  cursor: pointer; transition: transform .15s ease, box-shadow .15s ease; }
+.dest-card:hover, .dest-card:focus-visible { transform: translateY(-3px); box-shadow: 0 14px 28px -16px rgba(0,0,0,.28); outline: none; }
+.dest-cover { height: 140px; display: grid; place-items: center; background-color: #8fbfcf; }
+.dest-initial { font-size: 3rem; font-weight: 800; color: rgba(255,255,255,.85); }
+.dest-info { padding: 12px 14px 14px; }
+.dest-info h3 { margin: 0; font-size: 1.05rem; }
+.dest-country { margin: 2px 0 8px; color: #888; font-size: .82rem; }
+.dest-meta { display: grid; gap: 3px; font-size: .78rem; color: #666; }
+.dest-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+.dest-tag { background: #f3f1ea; border-radius: 999px; padding: 3px 9px; font-size: .72rem; color: #666; }
+.dest-count { margin: 10px 0 0; font-size: .78rem; color: #1fae9c; font-weight: 600; }
+
+/* ---------- Détail ---------- */
+.dest-back { justify-self: start; background: none; border: none; font: inherit; font-weight: 600;
+  color: #1fae9c; cursor: pointer; padding: 4px; }
+.dest-hero { position: relative; height: 230px; border-radius: 18px; overflow: hidden; display: flex;
+  align-items: flex-end; background-color: #8fbfcf; }
+.dest-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 35%, rgba(0,0,0,.55)); }
+.dest-hero-text { position: relative; z-index: 1; padding: 18px 22px; color: #fff; }
+.dest-hero-text h2 { margin: 0; font-size: 1.8rem; }
+.dest-hero-text p { margin: 2px 0 0; opacity: .9; }
+.dest-box { background: #fff; border: 1px solid var(--line, #ebe6dc); border-radius: 16px; padding: 18px; }
+.dest-facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.dest-fact b { display: block; font-size: .95rem; }
+.dest-fact span { font-size: .75rem; color: #888; }
+.dest-desc { margin: 16px 0 0; line-height: 1.6; }
+.dest-box .dest-tags { margin-top: 14px; }
+.dest-section-title { margin: 6px 4px 0; font-size: 1.05rem; }
+
+.dpost { background: #fff; border: 1px solid var(--line, #ebe6dc); border-radius: 16px; padding: 14px 16px; }
+.dpost-head { display: flex; align-items: center; gap: 10px; }
+.dpost-head b { display: block; font-size: .9rem; }
+.dpost-head small { color: #999; font-size: .75rem; }
+.dpost-ava { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center;
+  color: #fff; font-weight: 700; flex: none; background-color: #8fbfcf; }
+.dpost p { margin: 10px 0 0; line-height: 1.5; white-space: pre-wrap; word-break: break-word; }
+.dpost img { display: block; width: 100%; max-height: 360px; object-fit: cover; border-radius: 12px; margin-top: 10px; }
+.dpost-stats { margin-top: 10px; font-size: .8rem; color: #888; }
+
+.trend-link { cursor: pointer; border-radius: 10px; }
+.trend-link:hover { background: #f6f3ec; }
+
+@media (max-width: 560px) {
+  .dest-facts { grid-template-columns: 1fr; }
+  .dest-sort { margin-left: 0; }
+}

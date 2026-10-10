@@ -1,4 +1,5 @@
 import './RightSidebar.css'
+import TrendingDestinations from '../Destinations/TrendingDestinations'
 const dayOnly = (iso) => (iso || '').slice(0, 10)
 const shortDate = (iso) =>
   new Date(`${dayOnly(iso)}T00:00:00`)
@@ -11,7 +12,7 @@ function daysUntil(iso) {
   return Math.round((new Date(`${dayOnly(iso)}T00:00:00`) - today) / 86400000)
 }
 
-function RightSidebar({ nextTrip = null, onNavigate }) {
+function RightSidebar({ nextTrip = null, onNavigate, onOpenDestination }) {
   const days = nextTrip ? daysUntil(nextTrip.start_date) : null
 
   return (
@@ -70,27 +71,8 @@ function RightSidebar({ nextTrip = null, onNavigate }) {
       </div>
 
 
-      {/* Trending */}
-      <div className="panel">
-        <div className="rs-title">Trending with travelers</div>
-
-        <div className="trend-row">
-          <span className="trend-ph g1"></span>
-          <div>Tokyo<small>1,240 people talking about it</small></div>
-        </div>
-        <div className="trend-row">
-          <span className="trend-ph g2"></span>
-          <div>Bali<small>980 people saving it</small></div>
-        </div>
-        <div className="trend-row">
-          <span className="trend-ph g4"></span>
-          <div>Marrakech<small>740 new posts</small></div>
-        </div>
-        <div className="trend-row">
-          <span className="trend-ph g3"></span>
-          <div>Lisbon<small>620 travelers planning trips</small></div>
-        </div>
-      </div>
+      {/* Trending : destinations les plus publiées */}
+      <TrendingDestinations onOpen={onOpenDestination} />
 
 
       {/* Communities */}

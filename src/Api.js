@@ -72,5 +72,5 @@ export const updateTrip = (id, body) => request('PUT', `/trips/${id}/`, body)
 export const deleteTrip = (id) => request('DELETE', `/trips/${id}/`)
 
 /* ----- Profil ----- */
-export const getProfile = () => request('GET', '/users/me/')
-export const updateProfile = (body) => request('PUT', '/users/me/', body)
+export const getProfile = () => request('GET', '/auth/me/')
+export const updateProfile = (body) => request('PATCH', '/auth/me/', body) // {full_name,bio,city,country,avatar_url}

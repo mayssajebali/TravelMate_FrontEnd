@@ -7,6 +7,7 @@ import {
 } from './Api'
 import Auth from './components/Auth/Auth'
 import TripsPage from './components/Trips/Tripspage'
+import ProfilePage from './components/Profile/ProfilePage'
 import Navbar from './components/Navbar/Navbar'
 import LeftSidebar from './components/LeftSidebar/LeftSidebar'
 import Stories from './components/Stories/Stories'
@@ -92,7 +93,7 @@ function App() {
             </>
           )}
           {section === 'trips' && <TripsPage trips={trips} onChange={refreshTrips} />}
-          {section === 'profile' && <p>Mon profil : page à venir</p>}
+          {section === 'profile' && <ProfilePage user={user} onUpdate={setUser} />}
         </main>
 
         <RightSidebar nextTrip={upcoming[0] ?? null} onNavigate={setSection} />

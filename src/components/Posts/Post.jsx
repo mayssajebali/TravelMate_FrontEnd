@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './Post.css'
-import { toggleLike, toggleSave, addComment, deleteComment, updatePost, deletePost } from '../../Api'
+import { toggleLike, toggleSave, addComment, deleteComment, updatePost, deletePost, sharePost, toggleFollow } from '../../Api'
 
 const GRADIENTS = ['g1', 'g2', 'g3', 'g4', 'g5']
 
@@ -28,12 +28,15 @@ function Post({ post, onDeleted, onSaveToggle }) {
   const [draft, setDraft] = useState(post.text)
   const [menu, setMenu] = useState(false)
   const [error, setError] = useState('')
+  const [shareMsg, setShareMsg] = useState('')           // US11 : feedback copie lien
+  const [isFollowing, setIsFollowing] = useState(false)  // US12 : état suivi auteur
 
   const run = async (fn) => {
     setError('')
     try { await fn() } catch (e) { setError(e.message) }
   }
 
+  // US09 — Like / Unlike
   const like = () => run(async () => {
     const r = await toggleLike(p.id)
     setP((x) => ({ ...x, liked_by_me: r.liked, likes_count: r.likes_count }))
@@ -45,6 +48,26 @@ function Post({ post, onDeleted, onSaveToggle }) {
     onSaveToggle?.(p.id, r.saved)
   })
 
+  // US11 — Partager : incrémente le compteur back + copie le lien dans le presse-papier
+  const share = () => run(async () => {
+    const r = await sharePost(p.id)
+    setP((x) => ({ ...x, shares_count: r.shares_count }))
+    try {
+      await navigator.clipboard.writeText(r.share_url)
+      setShareMsg('✓ Lien copié !')
+    } catch {
+      setShareMsg('✓ Partagé !')
+    }
+    setTimeout(() => setShareMsg(''), 2500)
+  })
+
+  // US12 — Suivre / Ne plus suivre l'auteur du post
+  const follow = () => run(async () => {
+    const r = await toggleFollow(p.author.id)
+    setIsFollowing(r.following)
+  })
+
+  // US10 — Commenter
   const sendComment = (e) => {
     e.preventDefault()
     const text = comment.trim()
@@ -101,14 +124,28 @@ function Post({ post, onDeleted, onSaveToggle }) {
         >
           {authorPhoto ? '' : authorInitial}
         </span>
+
         <div className="who">
-          <b>{p.author.full_name}</b>
-          <div>
+          <div className="who-top">
+            <b>{p.author.full_name}</b>
+            {/* US12 — bouton Suivre visible seulement si ce n'est pas mon post */}
+            {!p.is_mine && (
+              <button
+                className={`follow-btn${isFollowing ? ' following' : ''}`}
+                onClick={follow}
+                title={isFollowing ? 'Ne plus suivre' : 'Suivre ce voyageur'}
+              >
+                {isFollowing ? '✓ Suivi' : '+ Suivre'}
+              </button>
+            )}
+          </div>
+          <div className="who-meta">
             {p.destination && `${p.destination} · `}
             {timeAgo(p.created_at)}
             {p.updated_at && ' · modifié'}
           </div>
         </div>
+
         {p.is_mine && (
           <span className="more" onClick={() => setMenu((m) => !m)} style={{ cursor: 'pointer' }}>⋯</span>
         )}
@@ -142,32 +179,55 @@ function Post({ post, onDeleted, onSaveToggle }) {
         )}
       </div>
 
+      {/* Compteurs */}
       <div className="interactions">
         <span>❤ {p.likes_count}</span>
         <span>💬 {p.comments_count}</span>
+        <span>🔗 {p.shares_count ?? 0}</span>
       </div>
 
+      {/* Barre d'actions */}
       <div className="action-row">
+        {/* US09 */}
         <span onClick={like} style={{ cursor: 'pointer', fontWeight: p.liked_by_me ? 700 : 400 }}>
           {p.liked_by_me ? '❤️ Aimé' : '🤍 Like'}
         </span>
-        <span onClick={() => setShowComments((s) => !s)} style={{ cursor: 'pointer' }}>💬 Discuss</span>
+
+        {/* US10 */}
+        <span onClick={() => setShowComments((s) => !s)} style={{ cursor: 'pointer' }}>
+          💬 Commenter
+        </span>
+
+        {/* US11 */}
+        <span
+          onClick={share}
+          style={{ cursor: 'pointer', color: shareMsg ? 'var(--accent, #4caf50)' : 'inherit' }}
+          title="Partager et copier le lien"
+        >
+          {shareMsg || `🔗 Partager${p.shares_count ? ` (${p.shares_count})` : ''}`}
+        </span>
+
         <span onClick={save} style={{ cursor: 'pointer', fontWeight: p.saved_by_me ? 700 : 400 }}>
           📌 {p.saved_by_me ? 'Enregistré' : 'Save'}
         </span>
       </div>
 
+      {/* US10 — Section commentaires */}
       {showComments && (
         <div className="comments">
           {p.comments.map((c) => (
             <div key={c.id} className="comment">
               <b>{c.author.full_name}</b> {c.text} <small>{timeAgo(c.created_at)}</small>
-              {(p.is_mine || c.author.id === post.__meId) && null}
               <span onClick={() => removeComment(c.id)} style={{ cursor: 'pointer', marginLeft: 6 }}>✕</span>
             </div>
           ))}
           <form onSubmit={sendComment}>
-            <input value={comment} onChange={(e) => setComment(e.target.value)} placeholder="Écrire un commentaire…" maxLength={500} />
+            <input
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              placeholder="Écrire un commentaire…"
+              maxLength={500}
+            />
             <button type="submit">Envoyer</button>
           </form>
         </div>

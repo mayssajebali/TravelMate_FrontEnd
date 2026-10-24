@@ -2,15 +2,40 @@ import { useRef, useState } from 'react'
 import { updateProfile } from '../../Api'
 import './ProfilePage.css'
 
-const FIELDS = ['full_name', 'bio', 'city', 'country', 'avatar_url']
+const FIELDS = ['full_name', 'bio', 'city', 'country', 'preferences', 'avatar_url']
+
+const PREFERENCE_OPTIONS = [
+  'Randonnée',
+  'Plage',
+  'Culture',
+  'Gastronomie',
+  'Aventure',
+  'Villes',
+  'Nature',
+  'Détente',
+  'Road trip',
+  'Petit budget',
+  'Confort',
+  'Voyage en groupe',
+  'Voyage en solo',
+  'Vie nocturne',
+]
 
 const fromUser = (u) => ({
   full_name: u.full_name ?? '',
   bio: u.bio ?? '',
   city: u.city ?? '',
   country: u.country ?? '',
+  preferences: u.preferences ?? '',
   avatar_url: u.avatar_url ?? '',
 })
+
+// "Plage, Culture" -> ['Plage', 'Culture']
+const parsePrefs = (value) =>
+  (value || '')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean)
 
 // recadre l'image en carré et la réduit pour qu'elle reste légère
 const resizeImage = (file, size = 256) =>
@@ -43,6 +68,23 @@ const secondaryBtn = {
   fontWeight: 600,
 }
 
+const checkLabel = {
+  flexDirection: 'row',
+  alignItems: 'center',
+  gap: 8,
+  fontWeight: 400,
+  cursor: 'pointer',
+}
+
+const checkInput = {
+  width: 18,
+  height: 18,
+  padding: 0,
+  margin: 0,
+  accentColor: '#20a690',
+  cursor: 'pointer',
+}
+
 export default function ProfilePage({ user, onUpdate }) {
   const [form, setForm] = useState(() => fromUser(user))
   const [saving, setSaving] = useState(false)
@@ -50,8 +92,19 @@ export default function ProfilePage({ user, onUpdate }) {
   const [saved, setSaved] = useState(false)
   const fileRef = useRef(null)
 
+  const selected = parsePrefs(form.preferences)
+
   const change = (field) => (e) => {
     setForm((f) => ({ ...f, [field]: e.target.value }))
+    setSaved(false)
+  }
+
+  const togglePref = (option) => {
+    const current = parsePrefs(form.preferences)
+    const next = current.includes(option)
+      ? current.filter((p) => p !== option)
+      : [...current, option]
+    setForm((f) => ({ ...f, preferences: next.join(', ') }))
     setSaved(false)
   }
 
@@ -143,6 +196,29 @@ export default function ProfilePage({ user, onUpdate }) {
             Pays
             <input value={form.country} onChange={change('country')} maxLength={100} />
           </label>
+        </div>
+
+        <div>
+          <div style={{ fontSize: 14, fontWeight: 600, color: '#1f2937', marginBottom: 10 }}>
+            Préférences de voyage
+          </div>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(170px, 1fr))',
+            gap: 10,
+          }}>
+            {PREFERENCE_OPTIONS.map((option) => (
+              <label key={option} style={checkLabel}>
+                <input
+                  type="checkbox"
+                  checked={selected.includes(option)}
+                  onChange={() => togglePref(option)}
+                  style={checkInput}
+                />
+                {option}
+              </label>
+            ))}
+          </div>
         </div>
 
         <div>

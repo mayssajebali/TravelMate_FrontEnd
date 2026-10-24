@@ -92,6 +92,7 @@ export const toggleLike = (id) => request('POST', `/posts/${id}/like/`)
 export const toggleSave = (id) => request('POST', `/posts/${id}/save/`)
 export const addComment = (id, text) => request('POST', `/posts/${id}/comments/`, { text })
 export const deleteComment = (id, cid) => request('DELETE', `/posts/${id}/comments/${cid}/`)
+export const sharePost = (id) => request('POST', `/posts/${id}/share/`)   // US11
 /* ----- Voyages (backend à confirmer, contrat tiré de ta page de test) ----- */
 export const getTrips = () => request('GET', '/trips/')
 export const createTrip = (trip) => request('POST', '/trips/', trip) // {title,destination,start_date,end_date,budget}
@@ -101,6 +102,10 @@ export const deleteTrip = (id) => request('DELETE', `/trips/${id}/`)
 /* ----- Profil ----- */
 export const getProfile = () => request('GET', '/auth/me/')
 export const updateProfile = (body) => request('PATCH', '/auth/me/', body) // {full_name,bio,city,country,avatar_url}
+
+/* ----- Social (US12) ----- */
+export const getUserProfile = (userId) => request('GET', `/auth/${userId}/profile/`)
+export const toggleFollow = (userId) => request('POST', `/auth/${userId}/follow/`)
 
 
 /* ----- Destinations ----- */

@@ -1,0 +1,176 @@
+.fp-tabs {
+  display: flex;
+  gap: 4px;
+  margin: 8px 0 6px;
+  padding: 3px;
+  background: var(--bg);
+  border-radius: 999px;
+}
+
+.fp-tab {
+  flex: 1;
+  padding: 7px 8px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--soft);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.fp-tab.active {
+  background: var(--card, #fff);
+  color: var(--ink);
+  box-shadow: 0 1px 4px rgba(28, 37, 48, 0.1);
+}
+
+.fp-tab:focus-visible,
+.fp-btn:focus-visible {
+  outline: 2px solid var(--turq, #26c6da);
+  outline-offset: 2px;
+}
+
+.fp-count {
+  margin-left: 2px;
+  color: var(--turq, #20a793);
+}
+
+.fp-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 4px 0 0;          /* petit espace entre le contenu et la barre */
+  max-height: 340px;
+  overflow-y: auto;
+  overscroll-behavior: contain; /* le scroll de la liste ne fait pas défiler la page */
+
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  transition: scrollbar-color 0.2s;
+}
+
+/* la barre apparaît au survol de la liste */
+.fp-list:hover {
+  scrollbar-color: var(--line, #ebe6dc) transparent;
+}
+
+/* Chrome, Edge, Safari */
+.fp-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.fp-list::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 4px 0;
+}
+
+.fp-list::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 999px;
+  transition: background 0.2s;
+}
+
+.fp-list:hover::-webkit-scrollbar-thumb {
+  background: #d9d3c6;
+}
+
+.fp-list::-webkit-scrollbar-thumb:hover {
+  background: var(--turq, #20a793);
+}
+
+.fp-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 0;
+  border-top: 1px solid var(--line);
+}
+
+.fp-row:first-child {
+  border-top: none;
+}
+
+.fp-ava {
+  width: 38px;
+  height: 38px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  background-size: cover;
+  background-position: center;
+}
+
+.fp-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.fp-info b {
+  display: block;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fp-info small {
+  display: block;
+  color: var(--soft);
+  font-size: 0.72rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fp-btn {
+  flex: none;
+  padding: 5px 12px;
+  border: 1.5px solid var(--turq, #26c6da);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--turq, #26c6da);
+  font: inherit;
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, opacity 0.2s;
+}
+
+.fp-btn:hover:not(:disabled) {
+  background: var(--turq, #26c6da);
+  color: #fff;
+}
+
+.fp-btn.following {
+  border-color: var(--line);
+  color: var(--soft);
+}
+
+.fp-btn.following:hover:not(:disabled) {
+  background: none;
+  border-color: #ed4956;
+  color: #ed4956;
+}
+
+.fp-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.fp-empty {
+  margin: 12px 0 0;
+  text-align: center;
+}
+
+.fp-error {
+  margin: 8px 0 0;
+  font-size: 0.8rem;
+  color: #ed4956;
+}

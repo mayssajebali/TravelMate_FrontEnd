@@ -2,15 +2,50 @@ import { useRef, useState } from 'react'
 import { updateProfile } from '../../Api'
 import './ProfilePage.css'
 
-const FIELDS = ['full_name', 'bio', 'city', 'country', 'avatar_url']
+const FIELDS = ['full_name', 'bio', 'city', 'country', 'preferences', 'avatar_url',
+  'service_type', 'service_description', 'service_location', 'phone']
+
+const SERVICE_TYPES = [
+  { value: 'guide', label: 'Guide' },
+  { value: 'chauffeur', label: 'Chauffeur' },
+]
+
+const PREFERENCE_OPTIONS = [
+  'Randonnée',
+  'Plage',
+  'Culture',
+  'Gastronomie',
+  'Aventure',
+  'Villes',
+  'Nature',
+  'Détente',
+  'Road trip',
+  'Petit budget',
+  'Confort',
+  'Voyage en groupe',
+  'Voyage en solo',
+  'Vie nocturne',
+]
 
 const fromUser = (u) => ({
   full_name: u.full_name ?? '',
   bio: u.bio ?? '',
   city: u.city ?? '',
   country: u.country ?? '',
+  preferences: u.preferences ?? '',
   avatar_url: u.avatar_url ?? '',
+  service_type: u.service_type ?? '',
+  service_description: u.service_description ?? '',
+  service_location: u.service_location ?? '',
+  phone: u.phone ?? '',
 })
+
+// "Plage, Culture" -> ['Plage', 'Culture']
+const parsePrefs = (value) =>
+  (value || '')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean)
 
 // recadre l'image en carré et la réduit pour qu'elle reste légère
 const resizeImage = (file, size = 256) =>
@@ -43,15 +78,44 @@ const secondaryBtn = {
   fontWeight: 600,
 }
 
+const checkLabel = {
+  flexDirection: 'row',
+  alignItems: 'center',
+  gap: 8,
+  fontWeight: 400,
+  cursor: 'pointer',
+}
+
+const checkInput = {
+  width: 18,
+  height: 18,
+  padding: 0,
+  margin: 0,
+  accentColor: '#20a690',
+  cursor: 'pointer',
+}
+
 export default function ProfilePage({ user, onUpdate }) {
+  const isProvider = user.role === 'provider'
   const [form, setForm] = useState(() => fromUser(user))
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
   const [saved, setSaved] = useState(false)
   const fileRef = useRef(null)
 
+  const selected = parsePrefs(form.preferences)
+
   const change = (field) => (e) => {
     setForm((f) => ({ ...f, [field]: e.target.value }))
+    setSaved(false)
+  }
+
+  const togglePref = (option) => {
+    const current = parsePrefs(form.preferences)
+    const next = current.includes(option)
+      ? current.filter((p) => p !== option)
+      : [...current, option]
+    setForm((f) => ({ ...f, preferences: next.join(', ') }))
     setSaved(false)
   }
 
@@ -85,6 +149,10 @@ export default function ProfilePage({ user, onUpdate }) {
     if (!form.full_name.trim()) {
       setError('Le nom est obligatoire.')
       return
+    }
+    if (isProvider) {
+      if (!form.service_type) { setError('Choisis ton type de service.'); return }
+      if (!form.phone.trim()) { setError('Le téléphone est obligatoire.'); return }
     }
     setSaving(true)
     setError('')
@@ -144,6 +212,63 @@ export default function ProfilePage({ user, onUpdate }) {
             <input value={form.country} onChange={change('country')} maxLength={100} />
           </label>
         </div>
+
+        {isProvider ? (
+          <>
+            <label>
+              Type de service
+              <select value={form.service_type} onChange={change('service_type')}>
+                <option value="">Choisir…</option>
+                {SERVICE_TYPES.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
+              </select>
+            </label>
+
+            <label>
+              Description du service
+              <textarea value={form.service_description} onChange={change('service_description')}
+                maxLength={1000} rows={4} placeholder="Décris ce que tu proposes, tes tarifs, tes langues…" />
+              <span className="profile-count">{form.service_description.length}/1000</span>
+            </label>
+
+            <div className="profile-row">
+              <label>
+                Zone / localisation
+                <input value={form.service_location} onChange={change('service_location')} maxLength={200}
+                  placeholder="Ex : Tunis, Sousse, Djerba" />
+              </label>
+              <label>
+                Téléphone
+                <input type="tel" value={form.phone} onChange={change('phone')} maxLength={30}
+                  placeholder="+216 …" />
+              </label>
+            </div>
+          </>
+        ) : (
+                  <div>
+          <div style={{ fontSize: 14, fontWeight: 600, color: '#1f2937', marginBottom: 10 }}>
+            Préférences de voyage
+          </div>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(170px, 1fr))',
+            gap: 10,
+          }}>
+            {PREFERENCE_OPTIONS.map((option) => (
+              <label key={option} style={checkLabel}>
+                <input
+                  type="checkbox"
+                  checked={selected.includes(option)}
+                  onChange={() => togglePref(option)}
+                  style={checkInput}
+                />
+                {option}
+              </label>
+            ))}
+          </div>
+        </div>
+        )}
+
+
 
         <div>
           <div style={{ fontSize: 14, fontWeight: 600, color: '#1f2937', marginBottom: 8 }}>Photo de profil</div>

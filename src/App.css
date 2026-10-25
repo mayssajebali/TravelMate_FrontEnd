@@ -61,11 +61,11 @@ a {
 .layout {
   display: grid;
 
-  grid-template-columns: 230px minmax(0, 1fr) 290px;
+  grid-template-columns: 330px minmax(0, 1fr) 350px;
 
   gap: 20px;
 
-  max-width: 1220px;
+  max-width: 1380px;
 
   margin: 18px auto 60px;
 

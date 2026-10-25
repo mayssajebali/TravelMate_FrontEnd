@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import './App.css'
+import Itineraries from './components/Itinerary/Itineraries'
 
 import {
   me, logout as apiLogout, getToken, setUnauthorizedHandler,
@@ -145,6 +146,7 @@ function App() {
           {section === 'explore' && (
             <DestinationsPage slug={destSlug} onSlugChange={setDestSlug} />
           )}
+          {section === 'itineraries' && <Itineraries />}
         </main>
 
         <RightSidebar

@@ -63,7 +63,7 @@ async function authenticate(path, body) {
   return data.user
 }
 export const login = (email, password) => authenticate('/auth/login/', { email, password })
-export const register = ({ email, full_name, password }) => authenticate('/auth/register/', { email, full_name, password })
+export const register = ({ email, full_name, password ,role }) => authenticate('/auth/register/', { email, full_name, password, role })
 export const me = () => request('GET', '/auth/me/')
 export const logout = clearToken
 
@@ -106,7 +106,8 @@ export const updateProfile = (body) => request('PATCH', '/auth/me/', body) // {f
 /* ----- Social (US12) ----- */
 export const getUserProfile = (userId) => request('GET', `/auth/${userId}/profile/`)
 export const toggleFollow = (userId) => request('POST', `/auth/${userId}/follow/`)
-
+export const getFollowing = () => request('GET', '/auth/following/')
+export const getSuggestions = () => request('GET', '/auth/suggestions/')
 
 /* ----- Destinations ----- */
 export const getDestinations = ({ q, tag, ordering, limit } = {}) => {
@@ -124,3 +125,19 @@ export const getDestinationPosts = (slug, { before, limit = 10 } = {}) => {
   if (before) qs.set('before', before)
   return request('GET', `/destinations/${slug}/posts/?${qs}`)
 }
+
+/* ----- Itinéraires ----- */
+export const getItineraries = ({ scope = 'mine' } = {}) => request('GET', `/itineraries/?scope=${scope}`)
+export const getItinerary = (id) => request('GET', `/itineraries/${id}/`)
+export const createItinerary = (body) => request('POST', '/itineraries/', body)
+export const updateItinerary = (id, body) => request('PUT', `/itineraries/${id}/`, body)
+export const deleteItinerary = (id) => request('DELETE', `/itineraries/${id}/`)
+export const copyItinerary = (id) => request('POST', `/itineraries/${id}/copy/`)
+export const getItineraryByTrip = (tripId) => request('GET', `/itineraries/by-trip/${tripId}/`)
+
+export const uploadItineraryCover = (id, file) => {
+  const fd = new FormData()
+  fd.append('image', file)
+  return request('POST', `/itineraries/${id}/cover/`, fd)
+}
+export const deleteItineraryCover = (id) => request('DELETE', `/itineraries/${id}/cover/`)

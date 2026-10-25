@@ -3,7 +3,7 @@ import { updateProfile } from '../../Api'
 import './ProfilePage.css'
 
 const FIELDS = ['full_name', 'bio', 'city', 'country', 'preferences', 'avatar_url',
-  'service_type', 'service_description', 'service_location', 'phone']
+  'service_type', 'service_description', 'service_location', 'phone', 'daily_rate']
 
 const SERVICE_TYPES = [
   { value: 'guide', label: 'Guide' },
@@ -38,6 +38,8 @@ const fromUser = (u) => ({
   service_description: u.service_description ?? '',
   service_location: u.service_location ?? '',
   phone: u.phone ?? '',
+  daily_rate: u.daily_rate ?? '',
+  availabilities: u.availabilities ?? [],
 })
 
 // "Plage, Culture" -> ['Plage', 'Culture']
@@ -142,7 +144,24 @@ export default function ProfilePage({ user, onUpdate }) {
     setSaved(false)
   }
 
-  const dirty = FIELDS.some((f) => form[f] !== fromUser(user)[f])
+  const dirty = JSON.stringify(form) !== JSON.stringify(fromUser(user))
+
+  const addPeriod = () => {
+    setForm((f) => ({ ...f, availabilities: [...f.availabilities, { start: '', end: '' }] }))
+    setSaved(false)
+  }
+  const editPeriod = (i, key) => (e) => {
+    setForm((f) => ({
+      ...f,
+      availabilities: f.availabilities.map((p, j) => (j === i ? { ...p, [key]: e.target.value } : p)),
+    }))
+    setSaved(false)
+  }
+  const removePeriod = (i) => {
+    setForm((f) => ({ ...f, availabilities: f.availabilities.filter((_, j) => j !== i) }))
+    setSaved(false)
+  }
+
 
   const submit = async (e) => {
     e.preventDefault()
@@ -154,10 +173,17 @@ export default function ProfilePage({ user, onUpdate }) {
       if (!form.service_type) { setError('Choisis ton type de service.'); return }
       if (!form.phone.trim()) { setError('Le téléphone est obligatoire.'); return }
     }
+    const bad = form.availabilities.find((p) => p.start && p.end && p.end < p.start)
+    if (bad) { setError('Une période se termine avant son début.'); return }
     setSaving(true)
     setError('')
     try {
-      const updated = await updateProfile({ ...form, full_name: form.full_name.trim() })
+      const updated = await updateProfile({
+        ...form,
+        full_name: form.full_name.trim(),
+        daily_rate: Number(form.daily_rate) || 0,
+        availabilities: form.availabilities.filter((p) => p.start && p.end),
+      })
       onUpdate(updated)
       setForm(fromUser(updated))
       setSaved(true)
@@ -226,9 +252,29 @@ export default function ProfilePage({ user, onUpdate }) {
             <label>
               Description du service
               <textarea value={form.service_description} onChange={change('service_description')}
-                maxLength={1000} rows={4} placeholder="Décris ce que tu proposes, tes tarifs, tes langues…" />
+                maxLength={1000} rows={4} placeholder="Décris ce que tu proposes, tes langues, ton expérience…" />
               <span className="profile-count">{form.service_description.length}/1000</span>
             </label>
+                        <label>
+              Tarif par jour (€)
+              <input type="number" min="0" max="100000" value={form.daily_rate}
+                onChange={change('daily_rate')} placeholder="Ex : 80" />
+            </label>
+
+            <div>
+              <div style={{ fontSize: 14, fontWeight: 600, color: '#1f2937', marginBottom: 8 }}>
+                Périodes de disponibilité
+              </div>
+              {form.availabilities.map((p, i) => (
+                <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 8, alignItems: 'center' }}>
+                  <input type="date" value={p.start} onChange={editPeriod(i, 'start')} />
+                  <span>→</span>
+                  <input type="date" value={p.end} min={p.start} onChange={editPeriod(i, 'end')} />
+                  <button type="button" style={secondaryBtn} onClick={() => removePeriod(i)}>✕</button>
+                </div>
+              ))}
+              <button type="button" style={secondaryBtn} onClick={addPeriod}>+ Ajouter une période</button>
+            </div>
 
             <div className="profile-row">
               <label>

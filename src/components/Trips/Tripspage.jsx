@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { createTrip, updateTrip, deleteTrip } from '../../Api'
 import './Trips.css'
+import Itineraries from '../Itinerary/Itineraries'
 
 const EMPTY = { title: '', destination: '', start_date: '', end_date: '', budget: '', description: '', activities: '' }
 
@@ -21,7 +22,7 @@ const statusOf = (t) => {
 }
 const STATUS_LABEL = { upcoming: 'Upcoming', ongoing: 'Happening now', past: 'Past' }
 
-function TripCard({ trip, onEdit, onDelete }) {
+function TripCard({ trip, onEdit, onDelete,onItinerary }) {
   const st = statusOf(trip)
   const n = nights(trip)
   return (
@@ -51,6 +52,7 @@ function TripCard({ trip, onEdit, onDelete }) {
       <div className="trip-actions">
         <button type="button" onClick={() => onEdit(trip)}>Edit</button>
         <button type="button" className="danger" onClick={() => onDelete(trip)}>Delete</button>
+        <button type="button" onClick={() => onItinerary(trip)}>Itinéraire</button>
       </div>
     </article>
   )
@@ -61,6 +63,7 @@ export default function TripsPage({ trips, onChange }) {
   const [editingId, setEditingId] = useState(null)
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
+  const [itineraryTrip, setItineraryTrip] = useState(null)
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }))
 
   const reset = () => { setForm(EMPTY); setEditingId(null); setError('') }
@@ -123,7 +126,16 @@ export default function TripsPage({ trips, onChange }) {
   const byStart = (a, b) => day(a.start_date).localeCompare(day(b.start_date))
   const current = trips.filter((t) => statusOf(t) !== 'past').sort(byStart)
   const past = trips.filter((t) => statusOf(t) === 'past').sort((a, b) => byStart(b, a))
-
+  if (itineraryTrip) {
+    return (
+      <Itineraries
+        trip={itineraryTrip}
+        onClose={() => setItineraryTrip(null)}
+      />
+    )
+  }
+  const openItinerary = (t) =>
+  setItineraryTrip({ ...t, start_date: day(t.start_date), end_date: day(t.end_date) })
   return (
     <section className="trips-page">
       <form className="panel trips-form" onSubmit={submit} noValidate>
@@ -166,12 +178,12 @@ export default function TripsPage({ trips, onChange }) {
       <h2 className="trips-heading">Upcoming &amp; current</h2>
       {current.length === 0
         ? <div className="trips-empty">No upcoming trip yet. Plan your first adventure above.</div>
-        : current.map((t) => <TripCard key={t.id} trip={t} onEdit={edit} onDelete={remove} />)}
+        : current.map((t) => <TripCard key={t.id} trip={t} onEdit={edit} onDelete={remove} onItinerary={openItinerary}/>)}
 
       {past.length > 0 && (
         <>
           <h2 className="trips-heading">Past trips</h2>
-          {past.map((t) => <TripCard key={t.id} trip={t} onEdit={edit} onDelete={remove} />)}
+          {past.map((t) => <TripCard key={t.id} trip={t} onEdit={edit} onDelete={remove} onItinerary={openItinerary} />)}
         </>
       )}
     </section>

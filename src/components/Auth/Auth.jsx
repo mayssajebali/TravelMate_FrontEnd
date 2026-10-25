@@ -17,7 +17,10 @@ const COPY = {
 const TRAVEL_STYLES = ['Rando', 'Plage', 'Culture', 'Road trip', 'Petit budget']
 const CONFETTI = ['#FFB9C6', '#FFF1B8', '#C9EEE3', '#DDD3F8', '#FFD3C4', '#CDE5F7']
 const isMail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)
-
+const ROLES = [
+  { value: 'traveler', label: '🧳 Voyageur' },
+  { value: 'provider', label: '🧭 Prestataire' },
+]
 /* ---------- petits composants ---------- */
 
 function Field({ id, label, type = 'text', value, onChange, error, ...rest }) {
@@ -111,7 +114,7 @@ function LoginForm({ onSuccess, goSignup }) {
 }
 
 function SignupForm({ onSuccess, goLogin }) {
-  const [v, setV] = useState({ first: '', user: '', email: '', password: '', cgu: false, styles: [] })
+  const [v, setV] = useState({ first: '', user: '', email: '', password: '', cgu: false, styles: [] ,role: 'traveler'})
   const [e, setE] = useState({})
   const [loading, setLoading] = useState(false)
   const [serverErr, setServerErr] = useState('')
@@ -133,7 +136,7 @@ function SignupForm({ onSuccess, goLogin }) {
     setLoading(true)
     try {
       // Le modèle Django n'a pour l'instant que email / full_name / password
-      const user = await register({ email: v.email, full_name: v.first.trim(), password: v.password })
+      const user = await register({ email: v.email, full_name: v.first.trim(), password: v.password , role: v.role})
       onSuccess({ title: `Bienvenue, ${v.first.trim()} !`, user })
     } catch (ex) {
       setServerErr(ex.message)
@@ -147,12 +150,23 @@ function SignupForm({ onSuccess, goLogin }) {
       <h1 className="tm-title">Prépare ton sac !</h1>
       <p className="tm-sub">Ton profil en 1 minute chrono.</p>
       <form onSubmit={submit} noValidate>
+        <span className="tm-label" style={{ display: 'block' }}>Je m'inscris en tant que</span>
+        <div className="tm-chips" style={{ marginBottom: 12 }}>
+          {ROLES.map((r) => (
+            <label className="tm-chip" key={r.value}>
+              <input type="radio" name="role" checked={v.role === r.value} onChange={() => set('role')(r.value)} />
+              <span>{r.label}</span>
+            </label>
+          ))}
+        </div>
         <div className="tm-two">
           <div><Field id="s-first" label="Prénom" autoComplete="given-name" value={v.first} onChange={set('first')} error={e.first} /></div>
           <div><Field id="s-user" label="Pseudo" autoComplete="username" placeholder="@globetrotter" value={v.user} onChange={set('user')} error={e.user} /></div>
         </div>
         <Field id="s-email" label="E-mail" type="email" autoComplete="email" placeholder="toi@exemple.com" value={v.email} onChange={set('email')} error={e.email} />
         <Field id="s-pass" label="Mot de passe" type="password" autoComplete="new-password" placeholder="8 caractères minimum" value={v.password} onChange={set('password')} error={e.password} />
+        {v.role === 'traveler' && (
+          <>
         <span className="tm-label" style={{ display: 'block' }}>Ton style de voyage</span>
         <div className="tm-chips">
           {TRAVEL_STYLES.map((s) => (
@@ -161,7 +175,10 @@ function SignupForm({ onSuccess, goLogin }) {
               <span>{s}</span>
             </label>
           ))}
+          
         </div>
+        </>
+        )}
         <label className="tm-chk" style={{ margin: '16px 0 4px' }}>
           <input type="checkbox" checked={v.cgu} onChange={(ev) => set('cgu')(ev.target.checked)} /> J'accepte les conditions d'utilisation
         </label>

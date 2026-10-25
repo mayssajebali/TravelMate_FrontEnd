@@ -84,43 +84,94 @@
 
   line-height: 1.55;
 }
-
-.interactions {
+/* Barre d'actions style Instagram */
+.action-bar {
   display: flex;
-
-  gap: 20px;
-
-  padding: 8px 16px;
-
-  color: var(--soft);
-
-  font-size: 0.85rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px 0;
 }
 
-.action-row {
+.action-left {
   display: flex;
+  align-items: center;
+  gap: 2px;
+}
 
-  gap: 16px;
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  color: var(--ink, #111);
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.2s, color 0.2s;
+}
 
-  padding: 6px 16px 14px;
+.icon-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
 
+.icon-btn:active {
+  transform: scale(0.85);
+}
+
+.icon-btn:focus-visible {
+  outline: 2px solid var(--turq, #26c6da);
+  outline-offset: 2px;
+}
+
+.like-btn.active {
+  color: #ed4956;
+  animation: pop 0.3s ease;
+}
+
+.icon-btn.active-save {
+  color: var(--turq, #26c6da);
+}
+
+@keyframes pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+.share-msg {
+  margin-left: 6px;
+  font-size: 0.78rem;
   font-weight: 700;
-
-  font-size: 0.82rem;
-
-  color: var(--soft);
-
-  flex-wrap: wrap;
+  color: var(--turq, #26c6da);
 }
 
-.action-row span {
+/* Compteurs sous la barre */
+.post-stats {
+  padding: 4px 16px 14px;
+  font-size: 0.88rem;
+  color: var(--ink, #111);
+}
+
+.post-stats span {
+  color: var(--soft);
+}
+
+.view-comments {
+  display: block;
+  margin-top: 4px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--soft);
+  font-size: 0.85rem;
   cursor: pointer;
 }
 
-.action-row .hl {
-  color: var(--turq);
+.view-comments:hover {
+  text-decoration: underline;
 }
-
 .itin-actions {
   display: flex;
 
@@ -149,9 +200,247 @@
 
 .post-img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; display: block; }
 .post-menu { display: flex; gap: 8px; padding: 0 16px 8px; }
-.comments { padding: 8px 16px 16px; display: grid; gap: 6px; }
-.comments form { display: flex; gap: 8px; }
-.comments input { flex: 1; }
+/* Mini avatar */
+.mini-ava {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.8rem;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Commentaires */
+.comments {
+  padding: 12px 16px 16px;
+  border-top: 1px solid var(--line);
+}
+
+.comment-list {
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.comment {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.comment-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.comment-text {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+.comment-text b {
+  margin-right: 4px;
+}
+
+.comment-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 3px;
+  font-size: 0.74rem;
+  color: var(--soft);
+}
+
+.comment-del {
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--soft);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s, color 0.15s;
+}
+
+.comment:hover .comment-del,
+.comment-del:focus-visible {
+  opacity: 1;
+}
+
+.comment-del:hover {
+  color: #ed4956;
+}
+
+/* Sur mobile (pas de survol) : toujours visible */
+@media (hover: none) {
+  .comment-del { opacity: 1; }
+}
+
+.no-comments {
+  margin: 0 0 12px;
+  font-size: 0.85rem;
+  color: var(--soft);
+  text-align: center;
+}
+
+/* Champ de saisie */
+.comment-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px 4px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.comment-form:focus-within {
+  border-color: var(--turq, #26c6da);
+  box-shadow: 0 0 0 3px rgba(38, 198, 218, 0.15);
+}
+
+.comment-form input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.88rem;
+  font-family: inherit;
+  padding: 8px 0;
+  color: inherit;
+}
+
+.comment-form input::placeholder {
+  color: var(--soft);
+}
+
+.comment-send {
+  border: none;
+  background: var(--turq, #26c6da);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 7px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+}
+
+.comment-send:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.comment-send:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.comment-send:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* Modification du post */
+.edit-box {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.edit-area {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--card);
+  font-family: inherit;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: inherit;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.edit-area:focus {
+  border-color: var(--turq, #26c6da);
+  box-shadow: 0 0 0 3px rgba(38, 198, 218, 0.15);
+}
+
+.edit-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.char-count {
+  color: var(--soft);
+  font-size: 0.75rem;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-ghost,
+.btn-primary {
+  border-radius: 999px;
+  padding: 7px 16px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s, background 0.2s;
+}
+
+.btn-ghost {
+  border: 1px solid var(--line);
+  background: none;
+  color: inherit;
+}
+
+.btn-ghost:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.btn-primary {
+  border: none;
+  background: var(--turq, #26c6da);
+  color: #fff;
+}
+
+.btn-primary:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* Menu Modifier / Supprimer */
+.post-menu button {
+  border: 1px solid var(--line);
+  background: none;
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.post-menu button:last-child:hover {
+  color: #ed4956;
+  border-color: #ed4956;
+}
 
 /* US12 — who avec bouton Suivre */
 .who { flex: 1; }
@@ -177,4 +466,4 @@
 .follow-btn.following {
   background: var(--turq, #26c6da);
   color: #fff;
-}
+}

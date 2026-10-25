@@ -1,4 +1,5 @@
 import './RightSidebar.css'
+import FollowPanel from '../Followers/FollowPanel'
 import TrendingDestinations from '../Destinations/TrendingDestinations'
 const dayOnly = (iso) => (iso || '').slice(0, 10)
 const shortDate = (iso) =>
@@ -43,7 +44,7 @@ function RightSidebar({ nextTrip = null, onNavigate, onOpenDestination }) {
         )}
       </div>
 
-
+      <FollowPanel />
       {/* ---- Les 3 blocs suivants restent statiques pour l'instant ---- */}
 
       {/* Travel mates */}

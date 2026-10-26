@@ -1,5 +1,6 @@
 import './LeftSidebar.css'
-import { Route } from 'lucide-react'
+import { Route, Briefcase, CalendarCheck, Inbox } from 'lucide-react'
+
 
 const GRADIENTS = ['g1', 'g2', 'g3', 'g4', 'g5']
 
@@ -83,6 +84,9 @@ const NAV = [
   { icon: <Route size={20} strokeWidth={1.8} />, label: 'Itinéraires', section: 'itineraries' },
   { icon: Icons.user, label: 'Mon profil', section: 'profile' },
   { icon: Icons.compass, label: 'Explorer', section: 'explore' },
+  { icon: <Briefcase size={20} strokeWidth={1.8} />, label: 'Prestataires', section: 'providers', roles: ['traveler'] },
+  { icon: <CalendarCheck size={20} strokeWidth={1.8} />, label: 'Mes demandes', section: 'bookings', roles: ['traveler'] },
+  { icon: <Inbox size={20} strokeWidth={1.8} />, label: 'Demandes reçues', section: 'requests', roles: ['provider'] },
   { icon: Icons.users, label: 'Travel Mates', section: null },
   { icon: Icons.globe, label: 'Communautés', section: null },
   { icon: Icons.mail, label: 'Messages', section: null },
@@ -113,23 +117,26 @@ function LeftSidebar({ user, stats = { trips: 0, upcoming: 0 }, section = 'feed'
         </button>
 
         <nav className="lsb-nav">
-          {NAV.map(({ icon, label, section: key }) =>
-            key ? (
-              <button
-                key={label}
-                type="button"
-                className={`lsb-link${section === key ? ' active' : ''}`}
-                onClick={() => onNavigate?.(key)}
-              >
-                <span aria-hidden="true">{icon}</span>{label}
-              </button>
-            ) : (
-              <button key={label} type="button" className="lsb-link soon" aria-disabled="true" title="Bientôt disponible">
-                <span aria-hidden="true">{icon}</span>{label}
-              </button>
-            ),
+          {NAV.filter((n) => !n.roles || n.roles.includes(user?.role ?? 'traveler')).map(
+            ({ icon, label, section: key }) =>
+              key ? (
+                <button
+                  key={label}
+                  type="button"
+                  className={`lsb-link${section === key ? ' active' : ''}`}
+                  onClick={() => onNavigate?.(key)}
+                >
+                  <span aria-hidden="true">{icon}</span>{label}
+                </button>
+              ) : (
+                <button key={label} type="button" className="lsb-link soon" aria-disabled="true" title="Bientôt disponible">
+                  <span aria-hidden="true">{icon}</span>{label}
+                </button>
+              ),
           )}
         </nav>
+
+        
 
         <div className="lsb-title">Ton monde</div>
         <div className="lsb-stats">

@@ -16,6 +16,7 @@ export class ApiError extends Error {
 // {error} | {detail} | {champ: [messages]}  ->  texte lisible
 function errorText(data, status) {
   if (!data) return `Erreur serveur (${status}).`
+  if (Array.isArray(data)) return data.join(' ')
   if (data.error) return data.error
   if (data.detail) return data.detail
   const parts = Object.entries(data).map(([f, v]) => {
@@ -141,3 +142,26 @@ export const uploadItineraryCover = (id, file) => {
   return request('POST', `/itineraries/${id}/cover/`, fd)
 }
 export const deleteItineraryCover = (id) => request('DELETE', `/itineraries/${id}/cover/`)
+
+/* ----- Prestataires (US16) ----- */
+export const getProviders = (filters = {}) => {
+  const qs = new URLSearchParams()
+  Object.entries(filters).forEach(([k, v]) => {
+    if (v !== undefined && v !== null && String(v).trim() !== '') qs.set(k, v)
+  })
+  const s = qs.toString()
+  return request('GET', `/providers/${s ? `?${s}` : ''}`)
+}
+export const getProvider = (id) => request('GET', `/providers/${id}/`)
+
+/* ----- Réservations (US17) ----- */
+export const createBooking = (body) => request('POST', '/bookings/', body)
+export const getMyBookings = ({ status } = {}) =>
+  request('GET', `/bookings/${status ? `?status=${status}` : ''}`)
+export const cancelBooking = (id) => request('POST', `/bookings/${id}/cancel/`)
+
+/* ----- Demandes reçues (US18) ----- */
+export const getReceivedBookings = ({ status } = {}) =>
+  request('GET', `/bookings/?role=received${status ? `&status=${status}` : ''}`)
+export const respondBooking = (id, action, message = '') =>
+  request('POST', `/bookings/${id}/respond/`, { action, message })

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import './App.css'
 import Itineraries from './components/Itinerary/Itineraries'
+import MyBookingsPage from './components/Bookings/MyBookingsPage'
 
 import {
   me, logout as apiLogout, getToken, setUnauthorizedHandler,
@@ -10,6 +11,7 @@ import Auth from './components/Auth/Auth'
 import TripsPage from './components/Trips/Tripspage'
 import ProfilePage from './components/Profile/ProfilePage'
 import DestinationsPage from './components/Destinations/DestinationsPage'
+import ProvidersPage from './components/Providers/ProvidersPage' // NOUVEAU (US16)
 import Navbar from './components/Navbar/Navbar'
 import LeftSidebar from './components/LeftSidebar/LeftSidebar'
 import Stories from './components/Stories/Stories'
@@ -17,6 +19,7 @@ import Composer from './components/Composer/Composer'
 import AiCard from './components/AiCard/AiCard'
 import Post from './components/Posts/Post'
 import RightSidebar from './components/RightSidebar/RightSidebar'
+import ReceivedBookingsPage from './components/Bookings/ReceivedBookingsPage'
 
 const dayOnly = (iso) => (iso || '').slice(0, 10)
 const todayStr = () => {
@@ -28,7 +31,7 @@ function App() {
   const [user, setUser] = useState(null)
   const [checking, setChecking] = useState(!!getToken())
   const [notice, setNotice] = useState('')
-  const [section, setSection] = useState('feed') // 'feed' | 'trips' | 'profile' | 'explore' | 'saved'
+  const [section, setSection] = useState('feed') // 'feed' | 'trips' | 'itineraries' | 'profile' | 'explore' | 'providers' | 'saved'
   const [destSlug, setDestSlug] = useState(null)
   const [posts, setPosts] = useState([])
   const [saved, setSaved] = useState([])
@@ -147,6 +150,9 @@ function App() {
             <DestinationsPage slug={destSlug} onSlugChange={setDestSlug} />
           )}
           {section === 'itineraries' && <Itineraries />}
+          {section === 'providers' && user.role !== 'provider' && <ProvidersPage onNavigate={navigate} />}
+          {section === 'bookings' && user.role !== 'provider' && <MyBookingsPage onNavigate={navigate} />} 
+          {section === 'requests' && user.role === 'provider' && <ReceivedBookingsPage />}
         </main>
 
         <RightSidebar

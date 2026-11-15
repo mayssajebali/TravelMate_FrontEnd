@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { getProviders, getProvider, createBooking } from '../../Api'
+import ReviewSection from '../Reviews/ReviewSection'
 import './Providers.css'
 
 const PAGE = 12
@@ -191,6 +192,8 @@ function ProviderDetail({ id, onBack, onNavigate }) {
           <BookingForm provider={p} onSent={() => setSent(true)} />
         )}
       </section>
+
+      <ReviewSection targetType="provider" targetId={p.id} />
     </div>
   )
 }

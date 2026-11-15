@@ -165,3 +165,11 @@ export const getReceivedBookings = ({ status } = {}) =>
   request('GET', `/bookings/?role=received${status ? `&status=${status}` : ''}`)
 export const respondBooking = (id, action, message = '') =>
   request('POST', `/bookings/${id}/respond/`, { action, message })
+/* ----- Avis (US22) ----- */
+export const getReviews = (targetType, targetId) => {
+  const qs = new URLSearchParams({ target_type: targetType, target_id: targetId })
+  return request('GET', `/reviews/?${qs}`)
+}
+export const createReview = (body) => request('POST', '/reviews/', body) // {target_type, target_id, rating, comment}
+export const updateReview = (id, body) => request('PUT', `/reviews/${id}/`, body)
+export const deleteReview = (id) => request('DELETE', `/reviews/${id}/`)

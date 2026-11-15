@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { getDestination, getDestinationPosts } from '../../Api'
 import { budgetText, coverStyle, gradientClass } from './utils'
 import Post from '../Posts/Post'
+import ReviewSection from '../Reviews/ReviewSection'
 
 const PAGE = 10
 
@@ -109,6 +110,8 @@ export default function DestinationDetail({ slug, onBack }) {
           {loadingMore ? 'Chargement…' : 'Voir plus'}
         </button>
       )}
+
+      <ReviewSection targetType="place" targetId={dest.slug} />
     </div>
   )
 }

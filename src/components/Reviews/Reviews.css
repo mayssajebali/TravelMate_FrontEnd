@@ -1,0 +1,157 @@
+.rv-box {
+  --rv-accent: #1fa392;
+  --rv-border: #ece8e0;
+  --rv-bg: #faf8f4;
+  --rv-muted: #8a8a8a;
+
+  background: #fff;
+  border: 1px solid var(--rv-border);
+  border-radius: 20px;
+  padding: 12px 22px;
+  margin-top: 20px;
+  font-family: inherit;
+  color: inherit;
+}
+
+.rv-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 12px;
+}
+
+.rv-summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.rv-avg {
+  font-weight: 700;
+}
+
+.rv-count {
+  color: var(--rv-muted);
+  font-size: 0.9rem;
+}
+
+.rv-form {
+  background: var(--rv-bg);
+  border: 1px solid var(--rv-border);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 18px;
+}
+
+.rv-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #e3ded4;
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-top: 10px;
+  font: inherit;
+  background: #fff;
+  resize: vertical;
+}
+
+.rv-textarea:focus {
+  outline: none;
+  border-color: var(--rv-accent);
+  box-shadow: 0 0 0 3px rgba(31, 163, 146, 0.15);
+}
+
+.rv-btn {
+  display: block;
+  width: 100%;
+  background: var(--rv-accent);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 22px;
+  margin-top: 10px;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.rv-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.rv-error {
+  color: #b3261e;
+  margin: 8px 0 0;
+  font-size: 0.9rem;
+}
+
+.rv-empty {
+  color: var(--rv-muted);
+  margin: 0;
+}
+
+.rv-item {
+  padding: 14px 0;
+  border-top: 1px solid #f0ece4;
+}
+
+.rv-item:first-of-type {
+  border-top: none;
+}
+
+.rv-item-head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.rv-author {
+  font-weight: 600;
+}
+
+.rv-date {
+  margin-left: auto;
+  font-size: 0.8rem;
+  color: var(--rv-muted);
+}
+
+.rv-comment {
+  margin: 6px 0 0;
+  line-height: 1.5;
+}
+
+.rv-delete {
+  background: transparent;
+  border: 1px solid #e3ded4;
+  border-radius: 999px;
+  padding: 4px 12px;
+  margin-top: 8px;
+  font: inherit;
+  font-size: 0.8rem;
+  color: #b3261e;
+  cursor: pointer;
+}
+
+/* Photo de profil : petit rond */
+.rv-box .rv-ava {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  max-width: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+.rv-box .rv-ava--initial {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--rv-accent);
+  color: #fff;
+  font-weight: 700;
+}

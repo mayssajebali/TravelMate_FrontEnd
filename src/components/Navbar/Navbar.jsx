@@ -1,4 +1,5 @@
 import './Navbar.css'
+import NotificationBell from './NotificationBell'
 
 const GRADIENTS = ['g1', 'g2', 'g3', 'g4', 'g5']
 
@@ -35,13 +36,6 @@ const SearchIcon = () => (
   </svg>
 )
 
-const BellIcon = () => (
-  <svg {...svgProps}>
-    <path d="M6 16V11a6 6 0 1 1 12 0v5l1.500 2h-15z" />
-    <path d="M10 21a2 2 0 0 0 4 0" />
-  </svg>
-)
-
 const MailIcon = () => (
   <svg {...svgProps}>
     <rect x="3" y="5" width="18" height="14" rx="2.500" />
@@ -57,7 +51,7 @@ const LogoutIcon = () => (
   </svg>
 )
 
-function Navbar({ user, onLogout }) {
+function Navbar({ user, onLogout, onNavigate }) {
   const name = user?.full_name ?? ''
   const photo = user?.avatar_url
 
@@ -83,9 +77,7 @@ function Navbar({ user, onLogout }) {
           Prêt pour l'aventure
         </span>
 
-        <button type="button" className="top-icon" aria-label="Notifications" title="Notifications">
-          <BellIcon />
-        </button>
+        <NotificationBell onNavigate={onNavigate} />
 
         <button type="button" className="top-icon" aria-label="Messages" title="Messages">
           <MailIcon />

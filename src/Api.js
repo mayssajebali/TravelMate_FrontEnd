@@ -165,3 +165,14 @@ export const getReceivedBookings = ({ status } = {}) =>
   request('GET', `/bookings/?role=received${status ? `&status=${status}` : ''}`)
 export const respondBooking = (id, action, message = '') =>
   request('POST', `/bookings/${id}/respond/`, { action, message })
+
+/* ----- Notifications (US21) ----- */
+export const getNotifications = ({ unread, limit = 20, skip = 0 } = {}) => {
+  const qs = new URLSearchParams({ limit, skip })
+  if (unread) qs.set('unread', 1)
+  return request('GET', `/notifications/?${qs}`)
+}
+export const getUnreadCount = () => request('GET', '/notifications/unread-count/')
+export const markNotificationRead = (id) => request('POST', `/notifications/${id}/read/`)
+export const markAllNotificationsRead = () => request('POST', '/notifications/read-all/')
+export const deleteNotification = (id) => request('DELETE', `/notifications/${id}/`)

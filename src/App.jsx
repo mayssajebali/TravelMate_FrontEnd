@@ -109,7 +109,7 @@ function App() {
 
   return (
     <>
-      <Navbar user={user} onLogout={() => logout()} />
+      <Navbar user={user} onLogout={() => logout()} onNavigate={navigate} />
 
       <div className="layout">
         <LeftSidebar user={user} stats={stats} section={section} onNavigate={navigate} />

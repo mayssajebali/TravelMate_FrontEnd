@@ -1,5 +1,5 @@
 import './LeftSidebar.css'
-import { Route, Briefcase, CalendarCheck, Inbox } from 'lucide-react'
+import { Route, Briefcase, CalendarCheck, Inbox, Star } from 'lucide-react'
 
 
 const GRADIENTS = ['g1', 'g2', 'g3', 'g4', 'g5']
@@ -87,6 +87,7 @@ const NAV = [
   { icon: <Briefcase size={20} strokeWidth={1.8} />, label: 'Prestataires', section: 'providers', roles: ['traveler'] },
   { icon: <CalendarCheck size={20} strokeWidth={1.8} />, label: 'Mes demandes', section: 'bookings', roles: ['traveler'] },
   { icon: <Inbox size={20} strokeWidth={1.8} />, label: 'Demandes reçues', section: 'requests', roles: ['provider'] },
+  { icon: <Star size={20} strokeWidth={1.8} />, label: 'Avis reçus', section: 'reviews', roles: ['provider'] },
   { icon: Icons.users, label: 'Travel Mates', section: null },
   { icon: Icons.globe, label: 'Communautés', section: null },
   { icon: Icons.mail, label: 'Messages', section: 'messages' },

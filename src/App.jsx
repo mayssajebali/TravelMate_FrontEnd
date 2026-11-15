@@ -20,7 +20,7 @@ import AiCard from './components/AiCard/AiCard'
 import Post from './components/Posts/Post'
 import RightSidebar from './components/RightSidebar/RightSidebar'
 import ReceivedBookingsPage from './components/Bookings/ReceivedBookingsPage'
-
+import ReceivedReviews from './components/Reviews/ReceivedReviews'
 const dayOnly = (iso) => (iso || '').slice(0, 10)
 const todayStr = () => {
   const d = new Date()
@@ -31,7 +31,7 @@ function App() {
   const [user, setUser] = useState(null)
   const [checking, setChecking] = useState(!!getToken())
   const [notice, setNotice] = useState('')
-  const [section, setSection] = useState('feed') // 'feed' | 'trips' | 'itineraries' | 'profile' | 'explore' | 'providers' | 'saved'
+  const [section, setSection] = useState('feed') // 'feed' | 'trips' | 'itineraries' | 'profile' | 'explore' | 'providers' | 'saved' | 'bookings' | 'requests' | 'reviews'
   const [destSlug, setDestSlug] = useState(null)
   const [posts, setPosts] = useState([])
   const [saved, setSaved] = useState([])
@@ -151,8 +151,9 @@ function App() {
           )}
           {section === 'itineraries' && <Itineraries />}
           {section === 'providers' && user.role !== 'provider' && <ProvidersPage onNavigate={navigate} />}
-          {section === 'bookings' && user.role !== 'provider' && <MyBookingsPage onNavigate={navigate} />} 
+          {section === 'bookings' && user.role !== 'provider' && <MyBookingsPage onNavigate={navigate} />}
           {section === 'requests' && user.role === 'provider' && <ReceivedBookingsPage />}
+          {section === 'reviews' && user.role === 'provider' && <ReceivedReviews />}
         </main>
 
         <RightSidebar

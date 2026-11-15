@@ -1,3 +1,4 @@
+
 .rv-box {
   --rv-accent: #1fa392;
   --rv-border: #ece8e0;
@@ -13,145 +14,119 @@
   color: inherit;
 }
 
+/* Titre */
 .rv-title {
   font-size: 1.1rem;
   font-weight: 700;
   margin: 0 0 12px;
 }
 
+/* Étoiles */
+.rv-stars {
+  color: #f5a623;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+/* Résumé */
 .rv-summary {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 18px;
-}
-
-.rv-avg {
-  font-weight: 700;
-}
-
-.rv-count {
-  color: var(--rv-muted);
+  margin: 12px 0 20px;
   font-size: 0.9rem;
 }
 
-.rv-form {
-  background: var(--rv-bg);
+.rv-summary strong {
+  font-weight: 700;
+}
+
+.rv-summary span:last-child {
+  color: var(--rv-muted);
+}
+
+/* Liste des avis */
+.rv-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Carte avis */
+.rv-item {
+  background: #fff;
   border: 1px solid var(--rv-border);
   border-radius: 14px;
-  padding: 14px;
-  margin-bottom: 18px;
+  padding: 16px 18px;
+  transition: box-shadow 0.2s ease;
 }
 
-.rv-textarea {
-  width: 100%;
-  box-sizing: border-box;
-  border: 1px solid #e3ded4;
-  border-radius: 12px;
-  padding: 10px 12px;
-  margin-top: 10px;
-  font: inherit;
-  background: #fff;
-  resize: vertical;
+.rv-item:hover {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
 }
 
-.rv-textarea:focus {
-  outline: none;
-  border-color: var(--rv-accent);
-  box-shadow: 0 0 0 3px rgba(31, 163, 146, 0.15);
+/* En-tête */
+.rv-item-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-.rv-btn {
-  display: block;
-  width: 100%;
-  background: var(--rv-accent);
-  color: #fff;
-  border: none;
-  border-radius: 999px;
-  padding: 12px 22px;
-  margin-top: 10px;
-  font: inherit;
+.rv-author-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rv-author {
+  font-weight: 600;
+  color: #202b38;
+  font-size: 0.95rem;
+}
+
+.rv-date {
+  color: var(--rv-muted);
+  font-size: 0.8rem;
+}
+
+/* Commentaire */
+.rv-comment {
+  margin: 12px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid #f0ece4;
+  color: #56616d;
+  line-height: 1.6;
   font-size: 0.9rem;
-  font-weight: 700;
-  cursor: pointer;
 }
 
-.rv-btn:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
+/* Aucun avis */
+.rv-empty {
+  color: var(--rv-muted);
+  margin: 0;
+  padding: 15px 0;
 }
 
+/* Erreur */
 .rv-error {
   color: #b3261e;
   margin: 8px 0 0;
   font-size: 0.9rem;
 }
 
-.rv-empty {
-  color: var(--rv-muted);
-  margin: 0;
-}
+/* Responsive */
+@media (max-width: 768px) {
+  .rv-box {
+    padding: 12px 14px;
+  }
 
-.rv-item {
-  padding: 14px 0;
-  border-top: 1px solid #f0ece4;
-}
+  .rv-item {
+    padding: 14px;
+  }
 
-.rv-item:first-of-type {
-  border-top: none;
-}
-
-.rv-item-head {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.rv-author {
-  font-weight: 600;
-}
-
-.rv-date {
-  margin-left: auto;
-  font-size: 0.8rem;
-  color: var(--rv-muted);
-}
-
-.rv-comment {
-  margin: 6px 0 0;
-  line-height: 1.5;
-}
-
-.rv-delete {
-  background: transparent;
-  border: 1px solid #e3ded4;
-  border-radius: 999px;
-  padding: 4px 12px;
-  margin-top: 8px;
-  font: inherit;
-  font-size: 0.8rem;
-  color: #b3261e;
-  cursor: pointer;
-}
-
-/* Photo de profil : petit rond */
-.rv-box .rv-ava {
-  width: 40px;
-  height: 40px;
-  min-width: 40px;
-  max-width: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  flex-shrink: 0;
-  display: inline-block;
-}
-
-.rv-box .rv-ava--initial {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--rv-accent);
-  color: #fff;
-  font-weight: 700;
+  .rv-item-head {
+    align-items: flex-start;
+  }
 }

@@ -20,6 +20,8 @@ import AiCard from './components/AiCard/AiCard'
 import Post from './components/Posts/Post'
 import RightSidebar from './components/RightSidebar/RightSidebar'
 import ReceivedBookingsPage from './components/Bookings/ReceivedBookingsPage'
+import Messages from './components/Messages/Messages'
+import { getUnreadCountMsg } from './Api'
 
 const dayOnly = (iso) => (iso || '').slice(0, 10)
 const todayStr = () => {
@@ -36,6 +38,7 @@ function App() {
   const [posts, setPosts] = useState([])
   const [saved, setSaved] = useState([])
   const [trips, setTrips] = useState([])
+  const [unread, setUnread] = useState(0)
 
   const logout = useCallback((message = '') => {
     apiLogout()
@@ -69,6 +72,15 @@ function App() {
   useEffect(() => {
     if (user && section === 'saved') refreshSaved()
   }, [user, section, refreshSaved])
+
+  
+  useEffect(() => {
+  if (!user) return
+  const load = () => getUnreadCountMsg().then((r) => setUnread(r.count)).catch(() => {})
+  load()
+  const t = setInterval(load, 8000)
+  return () => clearInterval(t)
+}, [user])
 
   // le Composer attrape l'erreur éventuelle (la fonction throw un ApiError)
   const publish = async (text, destination, image) => {
@@ -107,9 +119,10 @@ function App() {
     destinations: new Set(trips.map((t) => t.destination?.trim().toLowerCase()).filter(Boolean)).size,
   }
 
+
   return (
     <>
-      <Navbar user={user} onLogout={() => logout()} onNavigate={navigate} />
+      <Navbar user={user} onLogout={() => logout()} onNavigate={navigate} unread={unread}/>
 
       <div className="layout">
         <LeftSidebar user={user} stats={stats} section={section} onNavigate={navigate} />
@@ -153,6 +166,7 @@ function App() {
           {section === 'providers' && user.role !== 'provider' && <ProvidersPage onNavigate={navigate} />}
           {section === 'bookings' && user.role !== 'provider' && <MyBookingsPage onNavigate={navigate} />} 
           {section === 'requests' && user.role === 'provider' && <ReceivedBookingsPage />}
+          {section === 'messages' && <Messages />}
         </main>
 
         <RightSidebar

@@ -216,3 +216,24 @@ header.top {
   outline: 2px solid var(--turq);
   outline-offset: 2px;
 }
+
+.top-icon { position: relative; }
+
+.top-badge {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  display: grid;
+  place-items: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: #ed4956;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  line-height: 1;
+  border: 2px solid #fff;
+  box-sizing: content-box;
+}

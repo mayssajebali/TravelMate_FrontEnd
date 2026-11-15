@@ -184,3 +184,15 @@ export const getUnreadCount = () => request('GET', '/notifications/unread-count/
 export const markNotificationRead = (id) => request('POST', `/notifications/${id}/read/`)
 export const markAllNotificationsRead = () => request('POST', '/notifications/read-all/')
 export const deleteNotification = (id) => request('DELETE', `/notifications/${id}/`)
+
+/* ----- Messagerie ----- */
+export const getContacts = () => request('GET', '/chat/contacts/')
+export const getConversations = () => request('GET', '/chat/conversations/')
+export const openConversation = (userId) => request('POST', '/chat/conversations/', { user_id: userId })
+export const getMessages = (id, after) => request('GET', `/chat/conversations/${id}/messages/${after ? `?after=${after}` : ''}`)
+export const sendMessage = (id, text) => request('POST', `/chat/conversations/${id}/messages/`, { text })
+export const getUnreadCountMsg = () => request('GET', '/chat/unread/')
+export const createGroup = (name, members) => request('POST', '/chat/groups/', { name, members })
+export const renameGroup = (id, name) => request('PATCH', `/chat/groups/${id}/`, { name })
+export const addGroupMembers = (id, userIds) => request('POST', `/chat/groups/${id}/members/`, { user_ids: userIds })
+export const removeGroupMember = (id, userId) => request('DELETE', `/chat/groups/${id}/members/${userId}/`)

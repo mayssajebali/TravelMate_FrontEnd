@@ -51,7 +51,7 @@ const LogoutIcon = () => (
   </svg>
 )
 
-function Navbar({ user, onLogout, onNavigate }) {
+function Navbar({ user, onLogout, onNavigate,unread = 0 }) {
   const name = user?.full_name ?? ''
   const photo = user?.avatar_url
 
@@ -79,8 +79,15 @@ function Navbar({ user, onLogout, onNavigate }) {
 
         <NotificationBell onNavigate={onNavigate} />
 
-        <button type="button" className="top-icon" aria-label="Messages" title="Messages">
+        <button
+          type="button"
+          className="top-icon"
+          aria-label={unread > 0 ? `Messages (${unread} non lus)` : 'Messages'}
+          title="Messages"
+          onClick={() => onNavigate?.('messages')}
+        >
           <MailIcon />
+          {unread > 0 && <span className="top-badge">{unread > 9 ? '9+' : unread}</span>}
         </button>
 
         <span

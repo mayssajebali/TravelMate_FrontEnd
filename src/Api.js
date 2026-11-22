@@ -196,3 +196,7 @@ export const createGroup = (name, members) => request('POST', '/chat/groups/', {
 export const renameGroup = (id, name) => request('PATCH', `/chat/groups/${id}/`, { name })
 export const addGroupMembers = (id, userIds) => request('POST', `/chat/groups/${id}/members/`, { user_ids: userIds })
 export const removeGroupMember = (id, userId) => request('DELETE', `/chat/groups/${id}/members/${userId}/`)
+
+/* ----- Travel Mates / IA (US25) ----- */
+export const getMateSuggestions = ({ limit = 5, minScore = 20 } = {}) =>
+  request('GET', `/mates/suggestions/?limit=${limit}&min_score=${minScore}`)

@@ -1,35 +1,35 @@
 import { useState } from 'react'
+import './Reviews.css'
 
-const GOLD = '#FFD700'
-const GOLD_BORDER = '#DAA520'
-const EMPTY = '#E0E0E0'
-
-export default function StarRating({ value = 0, onChange, size = 24 }) {
+export default function StarRating({ value = 0, onChange, size = 20 }) {
   const [hover, setHover] = useState(0)
-  const readOnly = !onChange
-  const active = hover || Math.round(value)
+  const interactive = typeof onChange === 'function'
+  const shown = interactive && hover ? hover : Math.round(Number(value) || 0)
 
   return (
-    <span style={{ display: 'inline-flex', gap: 2 }}>
-      {[1, 2, 3, 4, 5].map((star) => (
-        <span
-          key={star}
-          onClick={() => !readOnly && onChange(star)}
-          onMouseEnter={() => !readOnly && setHover(star)}
-          onMouseLeave={() => !readOnly && setHover(0)}
-          style={{
-            fontSize: size,
-            lineHeight: 1,
-            cursor: readOnly ? 'default' : 'pointer',
-            color: star <= active ? GOLD : EMPTY,
-            textShadow: star <= active ? `0 0 1px ${GOLD_BORDER}` : 'none',
-            transition: 'color 0.15s',
-            userSelect: 'none',
-          }}
-        >
-          ★
-        </span>
-      ))}
+    <span
+      className={`rv-stars${interactive ? ' rv-stars--input' : ''}`}
+      role={interactive ? 'radiogroup' : 'img'}
+      aria-label={interactive ? 'Ta note' : `${shown} sur 5`}
+    >
+      {[1, 2, 3, 4, 5].map((n) =>
+        interactive ? (
+          <button
+            key={n}
+            type="button"
+            className={`rv-star${n <= shown ? ' on' : ''}`}
+            style={{ fontSize: size }}
+            onMouseEnter={() => setHover(n)}
+            onMouseLeave={() => setHover(0)}
+            onClick={() => onChange(n)}
+            aria-label={`${n} étoile${n > 1 ? 's' : ''}`}
+          >
+            ★
+          </button>
+        ) : (
+          <span key={n} className={`rv-star${n <= shown ? ' on' : ''}`} style={{ fontSize: size }}>★</span>
+        ),
+      )}
     </span>
   )
 }

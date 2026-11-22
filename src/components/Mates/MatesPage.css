@@ -1,0 +1,56 @@
+.mt-page { display: grid; gap: 14px; }
+.mt-header h2 { margin: 0; }
+.mt-header p, .mt-muted { margin: 2px 0 0; color: #6b7280; font-size: 14px; }
+
+.mt-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.mt-chip {
+  padding: 7px 16px; border-radius: 999px; border: 1px solid #e7e3d8;
+  background: #fff; color: #1f2937; font-weight: 600; cursor: pointer;
+}
+.mt-chip.active { background: #20a690; border-color: #20a690; color: #fff; }
+
+.mt-hint { background: #fdf0dd; color: #7a4a0c; border-radius: 12px; padding: 10px 14px; font-size: 14px; }
+.mt-hint button { background: none; border: none; padding: 0; color: #14806f; font-weight: 700; cursor: pointer; }
+
+.mt-grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+.mt-card { background: #fff; border: 1px solid #e7e3d8; border-radius: 16px; padding: 16px; display: grid; gap: 10px; align-content: start; }
+.mt-head { display: flex; gap: 12px; align-items: center; }
+.mt-head h3 { margin: 0; font-size: 16px; }
+.mt-ava { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-weight: 700; font-size: 20px; flex-shrink: 0; }
+.mt-score { margin-left: auto; text-align: right; display: grid; }
+.mt-score b { font-size: 20px; color: #14806f; }
+.mt-score span { font-size: 11px; color: #6b7280; }
+
+.mt-bar { height: 6px; border-radius: 999px; background: #eceae4; overflow: hidden; }
+.mt-bar i { display: block; height: 100%; background: #20a690; border-radius: 999px; }
+
+.mt-trip { margin: 0; padding: 8px 12px; background: #e3f5f1; border-radius: 10px; font-size: 13px; color: #14806f; }
+.mt-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.mt-tag { padding: 3px 10px; border-radius: 999px; background: #f1efe8; font-size: 12px; font-weight: 600; color: #374151; }
+.mt-reasons { margin: 0; padding-left: 18px; font-size: 13px; color: #4b5563; display: grid; gap: 2px; }
+
+.mt-follow {
+  justify-self: start; padding: 8px 22px; border-radius: 999px; font-weight: 700; cursor: pointer;
+  border: 1px solid #20a690; background: #20a690; color: #fff;
+}
+.mt-follow.on { background: #e3f5f1; color: #14806f; }
+.mt-follow:disabled { opacity: .5; cursor: not-allowed; }
+
+.mt-state { color: #6b7280; text-align: center; padding: 20px 0; }
+.mt-error { color: crimson; }
+.mt-ice { margin: 0; font-size: 14px; font-style: italic; color: #374151; }
+.mt-ai {
+  margin-left: 8px; padding: 2px 8px; border-radius: 999px; font-style: normal;
+  font-size: 11px; font-weight: 700; background: #efe7ff; color: #5b3fa8; white-space: nowrap;
+}
+.mt-trip--other { background: #fdf0dd; color: #7a4a0c; }
+
+.mt-actions { display: flex; gap: 8px; align-items: center; }
+.mt-chat, .mate-chat {
+  display: inline-grid; place-items: center; border-radius: 50%;
+  border: 1px solid #20a690; background: #fff; color: #14806f; cursor: pointer;
+}
+.mt-chat { width: 38px; height: 38px; }
+.mate-chat { width: 28px; height: 28px; margin-left: 6px; flex-shrink: 0; }
+.mt-chat:hover, .mate-chat:hover { background: #e3f5f1; }
+.mt-chat:disabled, .mate-chat:disabled { opacity: .5; cursor: not-allowed; }

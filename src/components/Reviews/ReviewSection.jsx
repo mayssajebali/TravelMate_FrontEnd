@@ -7,9 +7,7 @@ function Avatar({ name, url }) {
   return url ? (
     <img className="rv-ava" src={url} alt="" />
   ) : (
-    <span className="rv-ava rv-ava--initial">
-      {(name || '?').charAt(0).toUpperCase()}
-    </span>
+    <span className="rv-ava rv-ava--initial">{(name || '?').charAt(0).toUpperCase()}</span>
   )
 }
 
@@ -34,35 +32,22 @@ export default function ReviewSection({ targetType, targetId }) {
     }
   }, [targetType, targetId])
 
-  useEffect(() => {
-    loadReviews()
-  }, [loadReviews])
+  useEffect(() => { loadReviews() }, [loadReviews])
 
   useEffect(() => {
     if (!getToken()) return
-    me()
-      .then((u) => setUserId(String(u.id ?? u._id)))
-      .catch(() => {})
+    me().then((u) => setUserId(String(u.id ?? u._id))).catch(() => {})
   }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
-
-    if (!getToken()) {
-      setError('Connecte-toi pour donner ton avis.')
-      return
-    }
+    if (!getToken()) { setError('Connecte-toi pour donner ton avis.'); return }
     if (rating === 0) return
 
     setLoading(true)
     try {
-      await createReview({
-        target_type: targetType,
-        target_id: targetId,
-        rating,
-        comment,
-      })
+      await createReview({ target_type: targetType, target_id: targetId, rating, comment })
       setRating(0)
       setComment('')
       await loadReviews()
@@ -87,12 +72,15 @@ export default function ReviewSection({ targetType, targetId }) {
     <section className="rv-box">
       <h3 className="rv-title">Avis et évaluations</h3>
 
+      <div className="rv-summary">
+        <span className="rv-avg">{Number(average || 0).toFixed(1)}</span>
+        <StarRating value={average} size={20} />
+        <span className="rv-count">{count} avis</span>
+      </div>
+
       <form className="rv-form" onSubmit={handleSubmit}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
-          <StarRating value={rating} onChange={setRating} size={28} />
-          <span className="rv-avg">{average} / 5</span>
-          <span className="rv-count">({count} avis)</span>
-        </div>
+        <span className="rv-form-label">Ta note</span>
+        <StarRating value={rating} onChange={setRating} size={28} />
         <textarea
           className="rv-textarea"
           value={comment}
@@ -109,24 +97,24 @@ export default function ReviewSection({ targetType, targetId }) {
 
       {reviews.length === 0 && <p className="rv-empty">Aucun avis pour le moment.</p>}
 
-      {reviews.map((r) => (
-        <div className="rv-item" key={r.id}>
-          <div className="rv-item-head">
-            <Avatar name={r.author_name} url={r.author_avatar} />
-            <span className="rv-author">{r.author_name || 'Voyageur'}</span>
-            <StarRating value={r.rating} size={16} />
-            <span className="rv-date">
-              {new Date(r.created_at).toLocaleDateString('fr-FR')}
-            </span>
+      <div className="rv-list">
+        {reviews.map((r) => (
+          <div className="rv-item" key={r.id}>
+            <div className="rv-item-head">
+              <Avatar name={r.author_name} url={r.author_avatar} />
+              <div className="rv-author-info">
+                <span className="rv-author">{r.author_name || 'Voyageur'}</span>
+                <span className="rv-date">{new Date(r.created_at).toLocaleDateString('fr-FR')}</span>
+              </div>
+              <StarRating value={r.rating} size={16} />
+            </div>
+            {r.comment && <p className="rv-comment">{r.comment}</p>}
+            {userId === r.author_id && (
+              <button className="rv-delete" onClick={() => handleDelete(r.id)}>Supprimer</button>
+            )}
           </div>
-          {r.comment && <p className="rv-comment">{r.comment}</p>}
-          {userId === r.author_id && (
-            <button className="rv-delete" onClick={() => handleDelete(r.id)}>
-              Supprimer
-            </button>
-          )}
-        </div>
-      ))}
+        ))}
+      </div>
     </section>
   )
 }

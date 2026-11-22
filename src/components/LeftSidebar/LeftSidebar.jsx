@@ -88,7 +88,7 @@ const NAV = [
   { icon: <CalendarCheck size={20} strokeWidth={1.8} />, label: 'Mes demandes', section: 'bookings', roles: ['traveler'] },
   { icon: <Inbox size={20} strokeWidth={1.8} />, label: 'Demandes reçues', section: 'requests', roles: ['provider'] },
   { icon: <Star size={20} strokeWidth={1.8} />, label: 'Avis reçus', section: 'reviews', roles: ['provider'] },
-  { icon: Icons.users, label: 'Travel Mates', section: null },
+  { icon: Icons.users, label: 'Travel Mates', section: 'mates', roles: ['traveler'] },
   { icon: Icons.globe, label: 'Communautés', section: null },
   { icon: Icons.mail, label: 'Messages', section: 'messages' },
   { icon: Icons.bookmark, label: 'Enregistrés', section: 'saved' },

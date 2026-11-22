@@ -22,6 +22,7 @@ import RightSidebar from './components/RightSidebar/RightSidebar'
 import ReceivedBookingsPage from './components/Bookings/ReceivedBookingsPage'
 import Messages from './components/Messages/Messages'
 import { getUnreadCountMsg } from './Api'
+import MatesPage from './components/Mates/MatesPage'
 
 import ReceivedReviews from './components/Reviews/ReceivedReviews'
 const dayOnly = (iso) => (iso || '').slice(0, 10)
@@ -40,6 +41,7 @@ function App() {
   const [saved, setSaved] = useState([])
   const [trips, setTrips] = useState([])
   const [unread, setUnread] = useState(0)
+  const [chatWith, setChatWith] = useState(null) // personne à qui écrire
 
   const logout = useCallback((message = '') => {
     apiLogout()
@@ -50,6 +52,7 @@ function App() {
     setSection('feed')
     setDestSlug(null)
     setNotice(message)
+    setChatWith(null)
   }, [])
 
   // token expiré (401) => retour à l'écran de connexion avec un message
@@ -97,9 +100,17 @@ function App() {
 
   // « Explorer » repart toujours de la liste, pas du dernier détail ouvert
   const navigate = (s) => {
-    if (s === 'explore') setDestSlug(null)
-    setSection(s)
-  }
+  if (s === 'explore') setDestSlug(null)
+  setChatWith(null)          // évite de rouvrir l'ancienne conversation
+  setSection(s)
+}
+
+    // depuis le bouton 💬 : ouvre la messagerie directement sur la personne
+   const openChat = (userId) => {
+      setChatWith(userId)
+      setSection('messages')
+    }
+
 
   // ouvrir directement une destination (depuis « Trending »)
   const openDestination = (slug) => {
@@ -167,14 +178,16 @@ function App() {
           {section === 'providers' && user.role !== 'provider' && <ProvidersPage onNavigate={navigate} />}
           {section === 'bookings' && user.role !== 'provider' && <MyBookingsPage onNavigate={navigate} />}
           {section === 'requests' && user.role === 'provider' && <ReceivedBookingsPage />}
-          {section === 'messages' && <Messages />}
+          {section === 'messages' && <Messages startWith={chatWith} />}
           {section === 'reviews' && user.role === 'provider' && <ReceivedReviews />}
+          {section === 'mates' && user.role !== 'provider' && <MatesPage onNavigate={navigate} onMessage={openChat} />}
         </main>
 
         <RightSidebar
           nextTrip={upcoming[0] ?? null}
           onNavigate={navigate}
           onOpenDestination={openDestination}
+          onMessage={openChat}
         />
       </div>
 

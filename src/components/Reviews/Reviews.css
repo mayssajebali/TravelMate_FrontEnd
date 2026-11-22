@@ -1,132 +1,55 @@
+.rv-box { background: #fff; border: 1px solid #e7e3d8; border-radius: 18px; padding: 20px; display: grid; gap: 14px; }
+.rv-title { margin: 0; font-size: 18px; }
 
-.rv-box {
-  --rv-accent: #1fa392;
-  --rv-border: #ece8e0;
-  --rv-bg: #faf8f4;
-  --rv-muted: #8a8a8a;
+/* résumé */
+.rv-summary { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
+.rv-avg { font-size: 26px; font-weight: 800; color: #1f2937; }
+.rv-count { color: #6b7280; font-size: 14px; }
 
-  background: #fff;
-  border: 1px solid var(--rv-border);
-  border-radius: 20px;
-  padding: 12px 22px;
-  margin-top: 20px;
-  font-family: inherit;
-  color: inherit;
+/* étoiles */
+.rv-stars { display: inline-flex; gap: 2px; color: #f5b301; letter-spacing: 2px; }
+.rv-star {
+  background: none; border: none; padding: 0; line-height: 1;
+  color: #d9d5cc; cursor: default; font-family: inherit;
 }
+.rv-star.on { color: #f5b301; }
+.rv-stars--input .rv-star { cursor: pointer; transition: transform .1s; }
+.rv-stars--input .rv-star:hover { transform: scale(1.15); }
 
-/* Titre */
-.rv-title {
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin: 0 0 12px;
+/* formulaire */
+.rv-form { display: grid; gap: 10px; padding: 14px; background: #f7f5ee; border-radius: 14px; }
+.rv-form-label { font-size: 13px; font-weight: 600; color: #374151; }
+.rv-textarea {
+  width: 100%; box-sizing: border-box; padding: 10px 12px; border: 1px solid #d9d5cc;
+  border-radius: 10px; font-size: 14px; font-family: inherit; background: #fff; resize: vertical;
 }
-
-/* Étoiles */
-.rv-stars {
-  color: #f5a623;
-  font-size: 0.95rem;
-  letter-spacing: 1px;
-  white-space: nowrap;
+.rv-textarea:focus { outline: 2px solid #20a69055; border-color: #20a690; }
+.rv-btn {
+  justify-self: start; padding: 9px 22px; border: none; border-radius: 999px;
+  background: #20a690; color: #fff; font-weight: 700; cursor: pointer;
 }
+.rv-btn:disabled { opacity: .5; cursor: not-allowed; }
+.rv-error { margin: 0; color: crimson; font-size: 13px; }
+.rv-empty { margin: 0; color: #6b7280; text-align: center; padding: 10px 0; }
 
-/* Résumé */
-.rv-summary {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 12px 0 20px;
-  font-size: 0.9rem;
+/* liste */
+.rv-list { display: grid; gap: 12px; }
+.rv-item { border: 1px solid #efece3; border-radius: 14px; padding: 12px 14px; display: grid; gap: 8px; background: #fff; }
+.rv-item-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.rv-item-head .rv-stars { margin-left: auto; }
+.rv-author-info { display: grid; gap: 1px; }
+.rv-author { font-weight: 700; font-size: 14px; color: #1f2937; }
+.rv-date { color: #9ca3af; font-size: 12px; }
+.rv-comment { margin: 0; font-size: 14px; line-height: 1.45; color: #374151; white-space: pre-line; }
+
+.rv-ava { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.rv-ava--initial { display: grid; place-items: center; background: #5f9bb2; color: #fff; font-weight: 700; }
+
+.rv-delete {
+  justify-self: start; background: none; border: none; padding: 0;
+  color: #a83232; font-size: 13px; font-weight: 600; cursor: pointer;
 }
+.rv-delete:hover { text-decoration: underline; }
 
-.rv-summary strong {
-  font-weight: 700;
-}
-
-.rv-summary span:last-child {
-  color: var(--rv-muted);
-}
-
-/* Liste des avis */
-.rv-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-/* Carte avis */
-.rv-item {
-  background: #fff;
-  border: 1px solid var(--rv-border);
-  border-radius: 14px;
-  padding: 16px 18px;
-  transition: box-shadow 0.2s ease;
-}
-
-.rv-item:hover {
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
-}
-
-/* En-tête */
-.rv-item-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.rv-author-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.rv-author {
-  font-weight: 600;
-  color: #202b38;
-  font-size: 0.95rem;
-}
-
-.rv-date {
-  color: var(--rv-muted);
-  font-size: 0.8rem;
-}
-
-/* Commentaire */
-.rv-comment {
-  margin: 12px 0 0;
-  padding-top: 10px;
-  border-top: 1px solid #f0ece4;
-  color: #56616d;
-  line-height: 1.6;
-  font-size: 0.9rem;
-}
-
-/* Aucun avis */
-.rv-empty {
-  color: var(--rv-muted);
-  margin: 0;
-  padding: 15px 0;
-}
-
-/* Erreur */
-.rv-error {
-  color: #b3261e;
-  margin: 8px 0 0;
-  font-size: 0.9rem;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .rv-box {
-    padding: 12px 14px;
-  }
-
-  .rv-item {
-    padding: 14px;
-  }
-
-  .rv-item-head {
-    align-items: flex-start;
-  }
-}
+/* page « avis reçus » */
+.rv-summary + .rv-list { margin-top: 12px; }

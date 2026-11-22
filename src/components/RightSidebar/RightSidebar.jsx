@@ -1,6 +1,8 @@
 import './RightSidebar.css'
 import FollowPanel from '../Followers/FollowPanel'
 import TrendingDestinations from '../Destinations/TrendingDestinations'
+import MatesPanel from '../Mates/MatesPanel'
+
 const dayOnly = (iso) => (iso || '').slice(0, 10)
 const shortDate = (iso) =>
   new Date(`${dayOnly(iso)}T00:00:00`)
@@ -13,7 +15,7 @@ function daysUntil(iso) {
   return Math.round((new Date(`${dayOnly(iso)}T00:00:00`) - today) / 86400000)
 }
 
-function RightSidebar({ nextTrip = null, onNavigate, onOpenDestination }) {
+function RightSidebar({ nextTrip = null, onNavigate, onOpenDestination, onMessage })  {
   const days = nextTrip ? daysUntil(nextTrip.start_date) : null
 
   return (
@@ -45,38 +47,16 @@ function RightSidebar({ nextTrip = null, onNavigate, onOpenDestination }) {
       </div>
 
       <FollowPanel />
-      {/* ---- Les 3 blocs suivants restent statiques pour l'instant ---- */}
 
-      {/* Travel mates */}
-      <div className="panel">
-        <div className="rs-title">People going your way</div>
-        <div className="rs-sub">Travel Mates matched to your plans</div>
-
-        <div className="mate-row">
-          <span className="mate-ph g2"></span>
-          <div className="info">
-            <b>Sarah</b>
-            <div>🇫🇷 Tokyo · Oct 12–24</div>
-          </div>
-          <span className="pct">94%</span>
-        </div>
-
-        <div className="mate-row">
-          <span className="mate-ph g4"></span>
-          <div className="info">
-            <b>Adam</b>
-            <div>🇩🇪 Kyoto · Oct 15–27</div>
-          </div>
-          <span className="pct">89%</span>
-        </div>
-      </div>
-
+      {/* Travel mates : suggestions calculées (US25) */}
+      <MatesPanel onNavigate={onNavigate} onMessage={onMessage} />
 
       {/* Trending : destinations les plus publiées */}
       <TrendingDestinations onOpen={onOpenDestination} />
 
+      <MatesPanel onNavigate={onNavigate} onMessage={onMessage} />
 
-      {/* Communities */}
+      {/* Communities (statique pour l'instant) */}
       <div className="panel">
         <div className="rs-title">Your communities</div>
 

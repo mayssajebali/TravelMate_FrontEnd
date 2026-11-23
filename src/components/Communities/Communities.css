@@ -1,0 +1,82 @@
+.comm-page h2 { margin: 0; }
+.comm-sub { color: #7a7a7a; margin: 4px 0 16px; }
+
+.comm-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+.comm-tabs button {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid #e4e0d8;
+  background: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+.comm-tabs button.active { background: #1fa89a; border-color: #1fa89a; color: #fff; }
+
+.comm-error { color: #c0392b; }
+
+.comm-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.comm-card {
+  background: #fff;
+  border: 1px solid #ece8df;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.comm-cover {
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.9);
+  background: linear-gradient(135deg, #2c9fa3, #8cc7a1);
+  background-size: cover;
+  background-position: center;
+}
+.comm-body { padding: 14px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.comm-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.comm-head h3 { margin: 0; font-size: 16px; }
+.comm-match {
+  font-size: 11px;
+  font-weight: 700;
+  color: #1fa89a;
+  background: #e6f6f4;
+  padding: 3px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.comm-desc { margin: 0; color: #6b6b6b; font-size: 13px; }
+.comm-topics { display: flex; flex-wrap: wrap; gap: 6px; }
+.comm-topic {
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #f3f0ea;
+  color: #555;
+}
+.comm-topic.common { background: #e6f6f4; color: #1fa89a; font-weight: 600; }
+.comm-foot {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.comm-members { font-size: 12px; color: #7a7a7a; }
+.comm-btn {
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: 1px solid #1fa89a;
+  background: #1fa89a;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+.comm-btn.joined { background: #fff; color: #1fa89a; }
+.comm-btn:disabled { opacity: 0.6; cursor: default; }

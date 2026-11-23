@@ -200,3 +200,12 @@ export const removeGroupMember = (id, userId) => request('DELETE', `/chat/groups
 /* ----- Travel Mates / IA (US25) ----- */
 export const getMateSuggestions = ({ limit = 5, minScore = 20 } = {}) =>
   request('GET', `/mates/suggestions/?limit=${limit}&min_score=${minScore}`)
+/* ----- Avis reçus (prestataire) ----- */
+export const getReceivedReviews = () => request('GET', '/reviews/received/')
+
+/* ----- Communautés (US23) ----- */
+export const getCommunities = () => request('GET', '/communities/')
+export const getMyCommunities = () => request('GET', '/communities/mine/')
+export const getCommunity = (id) => request('GET', `/communities/${id}/`)
+export const joinCommunity = (id) => request('POST', `/communities/${id}/join/`)
+export const leaveCommunity = (id) => request('POST', `/communities/${id}/leave/`)

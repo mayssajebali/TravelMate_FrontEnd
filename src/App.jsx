@@ -20,11 +20,8 @@ import AiCard from './components/AiCard/AiCard'
 import Post from './components/Posts/Post'
 import RightSidebar from './components/RightSidebar/RightSidebar'
 import ReceivedBookingsPage from './components/Bookings/ReceivedBookingsPage'
-import Messages from './components/Messages/Messages'
-import { getUnreadCountMsg } from './Api'
-import MatesPage from './components/Mates/MatesPage'
-
 import ReceivedReviews from './components/Reviews/ReceivedReviews'
+import CommunitiesPage from './components/Communities/CommunitiesPage'
 const dayOnly = (iso) => (iso || '').slice(0, 10)
 const todayStr = () => {
   const d = new Date()
@@ -35,13 +32,11 @@ function App() {
   const [user, setUser] = useState(null)
   const [checking, setChecking] = useState(!!getToken())
   const [notice, setNotice] = useState('')
-  const [section, setSection] = useState('feed') // 'feed' | 'trips' | 'itineraries' | 'profile' | 'explore' | 'providers' | 'saved' | 'bookings' | 'requests' | 'reviews'
+  const [section, setSection] = useState('feed') // 'feed' | 'trips' | 'itineraries' | 'profile' | 'explore' | 'providers' | 'saved' | 'bookings' | 'requests' | 'reviews' | 'communities'
   const [destSlug, setDestSlug] = useState(null)
   const [posts, setPosts] = useState([])
   const [saved, setSaved] = useState([])
   const [trips, setTrips] = useState([])
-  const [unread, setUnread] = useState(0)
-  const [chatWith, setChatWith] = useState(null) // personne à qui écrire
 
   const logout = useCallback((message = '') => {
     apiLogout()
@@ -52,7 +47,6 @@ function App() {
     setSection('feed')
     setDestSlug(null)
     setNotice(message)
-    setChatWith(null)
   }, [])
 
   // token expiré (401) => retour à l'écran de connexion avec un message
@@ -77,15 +71,6 @@ function App() {
     if (user && section === 'saved') refreshSaved()
   }, [user, section, refreshSaved])
 
-  
-  useEffect(() => {
-  if (!user) return
-  const load = () => getUnreadCountMsg().then((r) => setUnread(r.count)).catch(() => {})
-  load()
-  const t = setInterval(load, 8000)
-  return () => clearInterval(t)
-}, [user])
-
   // le Composer attrape l'erreur éventuelle (la fonction throw un ApiError)
   const publish = async (text, destination, image) => {
     await createPost({ text, destination, image })
@@ -100,17 +85,9 @@ function App() {
 
   // « Explorer » repart toujours de la liste, pas du dernier détail ouvert
   const navigate = (s) => {
-  if (s === 'explore') setDestSlug(null)
-  setChatWith(null)          // évite de rouvrir l'ancienne conversation
-  setSection(s)
-}
-
-    // depuis le bouton 💬 : ouvre la messagerie directement sur la personne
-   const openChat = (userId) => {
-      setChatWith(userId)
-      setSection('messages')
-    }
-
+    if (s === 'explore') setDestSlug(null)
+    setSection(s)
+  }
 
   // ouvrir directement une destination (depuis « Trending »)
   const openDestination = (slug) => {
@@ -131,10 +108,9 @@ function App() {
     destinations: new Set(trips.map((t) => t.destination?.trim().toLowerCase()).filter(Boolean)).size,
   }
 
-
   return (
     <>
-      <Navbar user={user} onLogout={() => logout()} onNavigate={navigate} unread={unread}/>
+      <Navbar user={user} onLogout={() => logout()} onNavigate={navigate} />
 
       <div className="layout">
         <LeftSidebar user={user} stats={stats} section={section} onNavigate={navigate} />
@@ -178,16 +154,14 @@ function App() {
           {section === 'providers' && user.role !== 'provider' && <ProvidersPage onNavigate={navigate} />}
           {section === 'bookings' && user.role !== 'provider' && <MyBookingsPage onNavigate={navigate} />}
           {section === 'requests' && user.role === 'provider' && <ReceivedBookingsPage />}
-          {section === 'messages' && <Messages startWith={chatWith} />}
           {section === 'reviews' && user.role === 'provider' && <ReceivedReviews />}
-          {section === 'mates' && user.role !== 'provider' && <MatesPage onNavigate={navigate} onMessage={openChat} />}
+          {section === 'communities' && <CommunitiesPage />}
         </main>
 
         <RightSidebar
           nextTrip={upcoming[0] ?? null}
           onNavigate={navigate}
           onOpenDestination={openDestination}
-          onMessage={openChat}
         />
       </div>
 

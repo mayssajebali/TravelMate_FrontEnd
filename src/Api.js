@@ -206,3 +206,31 @@ export const getMyCommunities = () => request('GET', '/communities/mine/')
 export const getCommunity = (id) => request('GET', `/communities/${id}/`)
 export const joinCommunity = (id) => request('POST', `/communities/${id}/join/`)
 export const leaveCommunity = (id) => request('POST', `/communities/${id}/leave/`)
+
+/* ----- Communautés : publications & commentaires ----- */
+export const createCommunity = (data) => request('POST', '/communities/', data)
+
+export const getCommunityPosts = (communityId, page = 1, limit = 20) =>
+  request('GET', `/communities/${communityId}/posts/?page=${page}&limit=${limit}`)
+
+export const createCommunityPost = (communityId, data) =>
+  request('POST', `/communities/${communityId}/posts/`, data)
+
+export const deleteCommunityPost = (communityId, postId) =>
+  request('DELETE', `/communities/${communityId}/posts/${postId}/`)
+
+export const getCommunityComments = (communityId, postId) =>
+  request('GET', `/communities/${communityId}/posts/${postId}/comments/`)
+
+export const createCommunityComment = (communityId, postId, content) =>
+  request('POST', `/communities/${communityId}/posts/${postId}/comments/`, { content })
+
+export const deleteCommunityComment = (communityId, postId, commentId) =>
+  request('DELETE', `/communities/${communityId}/posts/${postId}/comments/${commentId}/`)
+
+export const likeCommunityPost = (communityId, postId) =>
+  request('POST', `/communities/${communityId}/posts/${postId}/like/`)
+
+/* ----- Assistant voyage ----- */
+// messages = [{ role: 'user' | 'assistant', content: '...' }, ...]
+export const chatWithAssistant = (messages) => request('POST', '/chatbot/', { messages })

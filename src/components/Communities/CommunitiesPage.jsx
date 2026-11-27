@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import {
   getCommunities,
   getMyCommunities,
@@ -6,17 +6,21 @@ import {
   leaveCommunity,
 } from '../../Api'
 import CommunityCard from './CommunityCard'
+import CommunityPage from './CommunityPage'
+import CreateCommunityForm from './CreateCommunityForm'
 import './Communities.css'
 
 export default function CommunitiesPage() {
   const [tab, setTab] = useState('discover') // 'discover' | 'mine'
+  const [openId, setOpenId] = useState(null) // communauté ouverte (pas de router : état local)
   const [all, setAll] = useState([])
   const [mine, setMine] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [showForm, setShowForm] = useState(false)
 
-  useEffect(() => {
-    Promise.all([getCommunities(), getMyCommunities()])
+  const load = useCallback(() => {
+    return Promise.all([getCommunities(), getMyCommunities()])
       .then(([a, m]) => {
         setAll(a)
         setMine(m)
@@ -24,6 +28,10 @@ export default function CommunitiesPage() {
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false))
   }, [])
+
+  useEffect(() => {
+    load()
+  }, [load])
 
   // rejoindre / quitter : on met à jour les deux listes avec la réponse du serveur
   const toggle = async (c) => {
@@ -42,12 +50,39 @@ export default function CommunitiesPage() {
     }
   }
 
+  // après création : le créateur est déjà membre, on ouvre directement la communauté
+  const handleCreated = (created) => {
+    setAll((l) => [created, ...l])
+    setMine((l) => [...l, created])
+    setShowForm(false)
+    setOpenId(created.id)
+  }
+
+  // retour depuis une communauté : on recharge (adhésion / compteurs ont pu changer)
+  const closeCommunity = () => {
+    setOpenId(null)
+    load()
+  }
+
+  if (openId) return <CommunityPage communityId={openId} onBack={closeCommunity} />
+
   const list = tab === 'discover' ? all : mine
 
   return (
     <div className="comm-page">
-      <h2>Communautés</h2>
-      <p className="comm-sub">Rejoins des communautés qui partagent tes centres d'intérêt.</p>
+      <div className="comm-title-row">
+        <div>
+          <h2>Communautés</h2>
+          <p className="comm-sub">Rejoins des communautés qui partagent tes centres d'intérêt.</p>
+        </div>
+        <button type="button" className="comm-btn" onClick={() => setShowForm((v) => !v)}>
+          {showForm ? 'Annuler' : '+ Créer'}
+        </button>
+      </div>
+
+      {showForm && (
+        <CreateCommunityForm onCreated={handleCreated} onCancel={() => setShowForm(false)} />
+      )}
 
       <div className="comm-tabs">
         <button
@@ -79,7 +114,7 @@ export default function CommunitiesPage() {
 
       <div className="comm-grid">
         {list.map((c) => (
-          <CommunityCard key={c.id} community={c} onToggle={toggle} />
+          <CommunityCard key={c.id} community={c} onToggle={toggle} onOpen={setOpenId} />
         ))}
       </div>
     </div>

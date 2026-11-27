@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import './App.css'
 import Itineraries from './components/Itinerary/Itineraries'
 import MyBookingsPage from './components/Bookings/MyBookingsPage'
-
+import ChatbotWidget from './components/Chatbot/ChatbotWidget'
 import {
   me, logout as apiLogout, getToken, setUnauthorizedHandler,
   getFeed, getSaved, createPost, getTrips,
@@ -196,6 +196,8 @@ function App() {
       <div className="note-left">
         This pass covers the premium feed experience.
       </div>
+
+      <ChatbotWidget user={user} />
     </>
   )
 }

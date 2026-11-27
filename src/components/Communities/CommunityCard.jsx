@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './Communities.css'
 
-export default function CommunityCard({ community, onToggle }) {
+export default function CommunityCard({ community, onToggle, onOpen }) {
   const [busy, setBusy] = useState(false)
   const c = community
 
@@ -17,15 +17,18 @@ export default function CommunityCard({ community, onToggle }) {
   return (
     <div className="comm-card">
       <div
-        className="comm-cover"
+        className="comm-cover comm-clickable"
         style={c.cover_image ? { backgroundImage: `url(${c.cover_image})` } : undefined}
+        onClick={() => onOpen(c.id)}
       >
         {c.cover_image ? '' : c.name.charAt(0).toUpperCase()}
       </div>
 
       <div className="comm-body">
         <div className="comm-head">
-          <h3>{c.name}</h3>
+          <h3 className="comm-clickable" onClick={() => onOpen(c.id)}>
+            {c.name}
+          </h3>
           {c.match > 0 && (
             <span className="comm-match">
               {c.match} thème{c.match > 1 ? 's' : ''} en commun

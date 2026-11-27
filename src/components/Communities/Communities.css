@@ -80,3 +80,125 @@
 }
 .comm-btn.joined { background: #fff; color: #1fa89a; }
 .comm-btn:disabled { opacity: 0.6; cursor: default; }
+
+.comm-title-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.comm-link { color: inherit; text-decoration: none; }
+.comm-link:hover { text-decoration: underline; }
+
+/* Formulaires */
+.comm-form {
+  background: #fff;
+  border: 1px solid #ece8df;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.comm-form h3 { margin: 0; }
+.comm-form label,
+.comm-form-label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; font-weight: 600; color: #555; }
+.comm-form input,
+.comm-form textarea,
+.comm-comment-form input {
+  padding: 9px 12px;
+  border: 1px solid #e4e0d8;
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 400;
+  resize: vertical;
+}
+.comm-form input:focus,
+.comm-form textarea:focus,
+.comm-comment-form input:focus { outline: 2px solid #1fa89a33; border-color: #1fa89a; }
+.comm-form-actions { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.comm-form-actions .comm-btn:only-child { margin-left: auto; }
+.comm-topic-btn { border: none; cursor: pointer; font: inherit; font-size: 12px; }
+.comm-topic-btn:hover { background: #e9e5dc; }
+.comm-topic-btn.common:hover { background: #d4f0ec; }
+
+/* Page détail */
+.comm-back { display: inline-block; margin-bottom: 12px; color: #1fa89a; font-weight: 600; text-decoration: none; }
+.comm-hero { background: #fff; border: 1px solid #ece8df; border-radius: 16px; overflow: hidden; margin-bottom: 16px; }
+.comm-hero-cover {
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 56px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.9);
+  background: linear-gradient(135deg, #2c9fa3, #8cc7a1);
+  background-size: cover;
+  background-position: center;
+}
+.comm-hero-body { padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+.comm-notice { background: #f3f0ea; padding: 12px 16px; border-radius: 12px; color: #555; }
+
+/* Fil de publications */
+.comm-feed-title { margin: 20px 0 12px; }
+.comm-feed { display: flex; flex-direction: column; gap: 14px; }
+.comm-more { display: block; margin: 16px auto 0; }
+
+.comm-post {
+  background: #fff;
+  border: 1px solid #ece8df;
+  border-radius: 16px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.comm-post-head { display: flex; align-items: center; gap: 10px; }
+.comm-post-head .comm-link-btn { margin-left: auto; }
+.comm-avatar {
+  width: 38px; height: 38px; flex-shrink: 0;
+  border-radius: 50%;
+  background: #e6f6f4; color: #1fa89a;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800;
+}
+.comm-avatar.small { width: 30px; height: 30px; font-size: 13px; }
+.comm-date { font-size: 12px; color: #8a8a8a; }
+.comm-post-content { margin: 0; white-space: pre-wrap; word-break: break-word; }
+.comm-post-image { max-width: 100%; max-height: 380px; object-fit: cover; border-radius: 12px; }
+
+.comm-link-btn {
+  align-self: flex-start;
+  background: none; border: none; padding: 2px 0;
+  color: #1fa89a; font-weight: 600; font-size: 13px; cursor: pointer;
+}
+.comm-link-btn.danger { color: #c0392b; }
+.comm-link-btn:hover { text-decoration: underline; }
+
+/* Commentaires */
+.comm-comments { border-top: 1px solid #f0ece4; padding-top: 10px; display: flex; flex-direction: column; gap: 10px; }
+.comm-comment { display: flex; gap: 8px; align-items: flex-start; }
+.comm-comment-body { flex: 1; background: #f7f5f0; border-radius: 12px; padding: 8px 12px; font-size: 14px; }
+.comm-comment-body p { margin: 2px 0 0; white-space: pre-wrap; word-break: break-word; }
+.comm-comment-form { display: flex; gap: 8px; }
+.comm-comment-form input { flex: 1; }
+
+.comm-clickable { cursor: pointer; }
+.comm-clickable:hover { opacity: 0.92; }
+h3.comm-clickable:hover { text-decoration: underline; opacity: 1; }
+/* .comm-back est maintenant un <button> */
+.comm-back { background: none; border: none; padding: 0; font: inherit; cursor: pointer; }
+
+/* Choix d'image locale dans le composer */
+.comm-image-pick { display: flex; align-items: center; gap: 12px; }
+.comm-form label.comm-file-btn {
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #1fa89a;
+  cursor: pointer;
+}
+
+/* Barre d'actions : on réutilise .action-bar / .icon-btn / .post-stats du feed,
+   mais .comm-post a déjà son propre padding */
+.comm-post .action-bar { padding: 0; }
+.comm-post .post-stats { padding: 0; }

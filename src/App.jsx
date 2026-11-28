@@ -7,7 +7,6 @@ import {
   me, logout as apiLogout, getToken, setUnauthorizedHandler,
   getFeed, getSaved, createPost, getTrips,
 } from './Api'
-import Auth from './components/Auth/Auth'
 import TripsPage from './components/Trips/Tripspage'
 import ProfilePage from './components/Profile/ProfilePage'
 import DestinationsPage from './components/Destinations/DestinationsPage'
@@ -26,6 +25,12 @@ import MatesPage from './components/Mates/MatesPage'
 
 import ReceivedReviews from './components/Reviews/ReceivedReviews'
 import CommunitiesPage from './components/Communities/CommunitiesPage'
+import ErrorBoundary from './components/ErrorBoundary'
+import AdminApp from './components/Admin/AdminApp'
+import AccessGate from './components/Auth/AccessGate'
+
+
+
 const dayOnly = (iso) => (iso || '').slice(0, 10)
 const todayStr = () => {
   const d = new Date()
@@ -70,7 +75,7 @@ function App() {
   const refreshTrips = useCallback(() => getTrips().then(setTrips).catch(() => {}), [])
 
   useEffect(() => {
-    if (user) { refreshFeed(); refreshTrips() }
+    if (user && user.role !== 'admin') { refreshFeed(); refreshTrips() }
   }, [user, refreshFeed, refreshTrips])
 
   // recharge « Enregistrés » à chaque ouverture de la section
@@ -78,14 +83,13 @@ function App() {
     if (user && section === 'saved') refreshSaved()
   }, [user, section, refreshSaved])
 
-
   useEffect(() => {
-  if (!user) return
-  const load = () => getUnreadCountMsg().then((r) => setUnread(r.count)).catch(() => {})
-  load()
-  const t = setInterval(load, 8000)
-  return () => clearInterval(t)
-}, [user])
+    if (!user || user.role === 'admin') return
+    const load = () => getUnreadCountMsg().then((r) => setUnread(r.count)).catch(() => {})
+    load()
+    const t = setInterval(load, 8000)
+    return () => clearInterval(t)
+  }, [user])
 
   // le Composer attrape l'erreur éventuelle (la fonction throw un ApiError)
   const publish = async (text, destination, image) => {
@@ -120,7 +124,8 @@ function App() {
   }
 
   if (checking) return null
-  if (!user) return <Auth notice={notice} onAuth={(u) => { setNotice(''); setUser(u) }} />
+  if (!user) return <AccessGate notice={notice} onAuth={(u) => { setNotice(''); setUser(u) }} />
+  if (user.role === 'admin') return <AdminApp user={user} onLogout={() => logout()} />
 
   // données du sidebar
   const upcoming = trips
@@ -183,6 +188,11 @@ function App() {
           {section === 'reviews' && user.role === 'provider' && <ReceivedReviews />}
           {section === 'mates' && user.role !== 'provider' && <MatesPage onNavigate={navigate} onMessage={openChat} />}
           {section === 'communities' && <CommunitiesPage />}
+          
+
+          <ErrorBoundary resetKey={section}>
+              {/* … toutes les sections … */}
+          </ErrorBoundary>
         </main>
 
         <RightSidebar

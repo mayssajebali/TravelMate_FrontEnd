@@ -53,6 +53,12 @@ async function request(method, path, body) {
     clearToken()
     onUnauthorized?.('Session expirée, reconnecte-toi.')
   }
+  if (res.status === 403 && data?.code === 'account_suspended' && token) {
+    clearToken()
+    onUnauthorized?.(data.error)
+  }
+
+
   if (!res.ok) throw new ApiError(errorText(data, res.status), res.status)
   return data
 }
@@ -65,6 +71,7 @@ async function authenticate(path, body) {
 }
 export const login = (email, password) => authenticate('/auth/login/', { email, password })
 export const register = ({ email, full_name, password ,role }) => authenticate('/auth/register/', { email, full_name, password, role })
+export const adminLogin = (email, password) => authenticate('/auth/admin-login/', { email, password })
 export const me = () => request('GET', '/auth/me/')
 export const logout = clearToken
 
@@ -234,3 +241,22 @@ export const likeCommunityPost = (communityId, postId) =>
 /* ----- Assistant voyage ----- */
 // messages = [{ role: 'user' | 'assistant', content: '...' }, ...]
 export const chatWithAssistant = (messages) => request('POST', '/chatbot/', { messages })
+
+/* ----- Modération (US27) ----- */
+export const reportContent = (body) => request('POST', '/moderation/report/', body) // {target_type, target_id, reason, details}
+export const getModerationStats = () => request('GET', '/moderation/stats/')
+export const getReports = ({ status = 'pending', target_type, limit = 30, skip = 0 } = {}) => {
+  const qs = new URLSearchParams({ status, limit, skip })
+  if (target_type) qs.set('target_type', target_type)
+  return request('GET', `/moderation/reports/?${qs}`)
+}
+export const resolveReport = (id, body) => request('POST', `/moderation/reports/${id}/resolve/`, body)
+export const getModUsers = ({ q, status, limit = 30, skip = 0 } = {}) => {
+  const qs = new URLSearchParams({ limit, skip })
+  if (q) qs.set('q', q)
+  if (status) qs.set('status', status)
+  return request('GET', `/moderation/users/?${qs}`)
+}
+export const setUserStatus = (id, body) => request('POST', `/moderation/users/${id}/status/`, body)
+export const getModLog = () => request('GET', '/moderation/log/')
+export const getAdminDashboard = (days = 30) => request('GET', `/moderation/dashboard/?days=${days}`)

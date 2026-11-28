@@ -1,0 +1,56 @@
+.db { display: grid; gap: 16px; }
+.db-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+.db-head h2 { margin: 0; }
+.db-head p { margin: 2px 0 0; color: #6b7280; font-size: 14px; }
+.db-ranges, .db-tabs { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.db-ranges button, .db-tabs button {
+  padding: 7px 14px; border-radius: 999px; border: 1px solid #e7e3d8; background: #fff;
+  font-weight: 600; cursor: pointer; color: #1f2937;
+}
+.db-ranges button.active, .db-tabs button.active { background: #20a690; border-color: #20a690; color: #fff; }
+.db-sum { margin-left: auto; color: #6b7280; font-size: 13px; }
+
+.db-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+.db-kpi { background: #fff; border: 1px solid #e7e3d8; border-radius: 16px; padding: 14px; display: grid; gap: 2px; align-content: start; }
+.db-kpi span { font-size: 13px; color: #6b7280; }
+.db-kpi b { font-size: 28px; line-height: 1.1; }
+.db-trend { font-size: 12px; font-weight: 700; color: #6b7280; }
+.db-trend.up { color: #14806f; }
+.db-trend.down { color: #a83232; }
+.db-note { color: #6b7280; font-size: 12px; }
+
+.db-card { background: #fff; border: 1px solid #e7e3d8; border-radius: 16px; padding: 16px; display: grid; gap: 12px; align-content: start; }
+.db-card.warn { background: #fdf0dd; border-color: #f1d3a2; }
+.db-card h3 { margin: 0; font-size: 16px; }
+.db-card h4 { margin: 8px 0 0; font-size: 13px; color: #6b7280; }
+.db-grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+
+.db-chart { width: 100%; height: 180px; display: block; }
+.db-grid { stroke: #efece3; stroke-width: 1; }
+.db-bar { fill: #20a690; }
+.db-bar:hover { fill: #14806f; }
+.db-axis { display: flex; justify-content: space-between; font-size: 12px; color: #9ca3af; }
+
+.db-bars { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.db-bars li { display: grid; grid-template-columns: 130px 1fr 36px; gap: 10px; align-items: center; font-size: 14px; }
+.db-bar-label { color: #374151; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-transform: capitalize; }
+.db-bar-track { height: 10px; border-radius: 999px; background: #eceae4; overflow: hidden; }
+.db-bar-track i { display: block; height: 100%; background: #20a690; border-radius: 999px; }
+.db-bars b { text-align: right; }
+
+.db-mod { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.db-mod li { display: grid; }
+.db-mod b { font-size: 24px; }
+.db-mod span { font-size: 12px; color: #6b7280; }
+.db-link { justify-self: start; background: none; border: none; padding: 0; color: #14806f; font-weight: 700; cursor: pointer; }
+
+.db-recent { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.db-recent li { display: grid; grid-template-columns: 36px 1fr auto auto; gap: 10px; align-items: center; font-size: 14px; }
+.db-recent img, .db-ava { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+.db-ava { display: grid; place-items: center; background: #5f9bb2; color: #fff; font-weight: 700; }
+.db-recent div { display: grid; min-width: 0; }
+.db-recent small { color: #9ca3af; font-size: 12px; overflow: hidden; text-overflow: ellipsis; }
+.db-recent em { font-style: normal; font-size: 11px; font-weight: 700; background: #e3f5f1; color: #14806f; padding: 2px 8px; border-radius: 999px; }
+
+.db-empty { color: #6b7280; text-align: center; padding: 12px 0; margin: 0; }
+.db-error { color: crimson; }

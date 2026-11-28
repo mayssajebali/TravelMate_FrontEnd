@@ -3,6 +3,7 @@ import FollowPanel from '../Followers/FollowPanel'
 import TrendingDestinations from '../Destinations/TrendingDestinations'
 import MatesPanel from '../Mates/MatesPanel'
 
+
 const dayOnly = (iso) => (iso || '').slice(0, 10)
 const shortDate = (iso) =>
   new Date(`${dayOnly(iso)}T00:00:00`)
@@ -15,7 +16,7 @@ function daysUntil(iso) {
   return Math.round((new Date(`${dayOnly(iso)}T00:00:00`) - today) / 86400000)
 }
 
-function RightSidebar({ nextTrip = null, onNavigate, onOpenDestination, onMessage })  {
+function RightSidebar({ nextTrip = null, onNavigate, onOpenDestination, onMessage }) {
   const days = nextTrip ? daysUntil(nextTrip.start_date) : null
 
   return (
@@ -48,13 +49,11 @@ function RightSidebar({ nextTrip = null, onNavigate, onOpenDestination, onMessag
 
       <FollowPanel />
 
-      {/* Travel mates : suggestions calculées (US25) */}
+      {/* Travel mates : suggestions calculées (US25), un seul bloc */}
       <MatesPanel onNavigate={onNavigate} onMessage={onMessage} />
 
       {/* Trending : destinations les plus publiées */}
       <TrendingDestinations onOpen={onOpenDestination} />
-
-      <MatesPanel onNavigate={onNavigate} onMessage={onMessage} />
 
       {/* Communities (statique pour l'instant) */}
       <div className="panel">

@@ -1,0 +1,105 @@
+/* bouton et fenêtre de signalement */
+.rp-btn {
+  display: inline-flex; align-items: center; gap: 6px; background: none; border: none;
+  color: #6b7280; font-size: 13px; font-weight: 600; cursor: pointer; padding: 4px 6px; border-radius: 8px;
+}
+.rp-btn:hover { color: #a83232; background: #fbe4e4; }
+.rp-btn--compact { padding: 6px; border-radius: 50%; }
+.rp-overlay {
+  position: fixed; inset: 0; background: rgba(15, 23, 42, .45); z-index: 1000;
+  display: grid; place-items: center; padding: 16px;
+}
+.rp-modal { background: #fff; border-radius: 18px; padding: 22px; width: 100%; max-width: 440px; display: grid; gap: 12px; }
+.rp-modal h3 { margin: 0; }
+.rp-muted { margin: 0; color: #6b7280; font-size: 14px; }
+.rp-reasons { display: grid; gap: 6px; }
+.rp-reason {
+  display: flex; align-items: center; gap: 10px; padding: 9px 12px; border: 1px solid #e7e3d8;
+  border-radius: 12px; cursor: pointer; font-size: 14px;
+}
+.rp-reason.on { border-color: #20a690; background: #eef8f6; }
+.rp-modal textarea {
+  width: 100%; box-sizing: border-box; padding: 10px 12px; border: 1px solid #d9d5cc;
+  border-radius: 10px; font-family: inherit; font-size: 14px; resize: vertical;
+}
+.rp-actions { display: flex; justify-content: flex-end; gap: 8px; }
+.rp-primary, .rp-ghost { padding: 9px 20px; border-radius: 999px; font-weight: 700; cursor: pointer; }
+.rp-primary { background: #20a690; color: #fff; border: none; }
+.rp-ghost { background: #fff; color: #374151; border: 1px solid #d9d5cc; }
+.rp-primary:disabled { opacity: .5; cursor: not-allowed; }
+.rp-error { margin: 0; color: crimson; font-size: 13px; }
+
+/* page administrateur */
+.md-page { display: grid; gap: 14px; }
+.md-header h2 { margin: 0; }
+.md-header p { margin: 2px 0 0; color: #6b7280; font-size: 14px; }
+.md-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; }
+.md-stat { background: #fff; border: 1px solid #e7e3d8; border-radius: 14px; padding: 12px; display: grid; gap: 2px; }
+.md-stat b { font-size: 22px; }
+.md-stat span { font-size: 12px; color: #6b7280; }
+.md-stat.warn { background: #fdf0dd; border-color: #f1d3a2; }
+
+.md-tabs { display: flex; gap: 6px; border-bottom: 1px solid #e7e3d8; }
+.md-tab { background: none; border: none; padding: 10px 14px; font-weight: 700; color: #6b7280; cursor: pointer; border-bottom: 2px solid transparent; }
+.md-tab.active { color: #14806f; border-bottom-color: #20a690; }
+
+.md-chips { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.md-chip {
+  padding: 7px 16px; border-radius: 999px; border: 1px solid #e7e3d8; background: #fff;
+  color: #1f2937; font-weight: 600; cursor: pointer;
+}
+.md-chip.active { background: #20a690; border-color: #20a690; color: #fff; }
+.md-select, .md-input, .md-search, .md-field select {
+  padding: 8px 10px; border: 1px solid #d9d5cc; border-radius: 10px; font-size: 14px; background: #fff; font-family: inherit;
+}
+.md-search { width: 100%; box-sizing: border-box; border-radius: 999px; padding: 11px 16px; }
+
+.md-list { display: grid; gap: 12px; }
+.md-card { background: #fff; border: 1px solid #e7e3d8; border-radius: 16px; padding: 16px; display: grid; gap: 10px; }
+.md-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.md-type { font-weight: 800; font-size: 13px; color: #374151; }
+.md-reason { padding: 3px 10px; border-radius: 999px; background: #fbe4e4; color: #a83232; font-size: 12px; font-weight: 700; }
+.md-count { font-size: 12px; font-weight: 700; color: #a86414; }
+.md-badge { margin-left: auto; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+.md-badge--pending { background: #fdf0dd; color: #a86414; }
+.md-badge--resolved { background: #e3f5f1; color: #14806f; }
+.md-badge--dismissed { background: #eceae4; color: #6b7280; }
+.md-quote { margin: 0; padding: 10px 14px; background: #f7f5ee; border-left: 3px solid #d9d5cc; border-radius: 8px; font-size: 14px; white-space: pre-line; }
+.md-text, .md-muted { margin: 0; font-size: 14px; color: #374151; }
+.md-muted { color: #6b7280; font-size: 13px; }
+.md-people { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.md-people div { display: grid; gap: 2px; }
+.md-people small { color: #9ca3af; font-size: 12px; }
+.md-people span { font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+
+.md-status { font-style: normal; padding: 2px 9px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+.md-status--active { background: #e3f5f1; color: #14806f; }
+.md-status--suspended { background: #fdf0dd; color: #a86414; }
+.md-status--banned { background: #fbe4e4; color: #a83232; }
+
+.md-form { display: grid; gap: 10px; padding-top: 6px; border-top: 1px solid #efece3; }
+.md-check { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; }
+.md-field { display: grid; gap: 4px; font-size: 13px; font-weight: 600; color: #374151; }
+.md-actions { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
+.md-actions--row { justify-content: flex-start; align-items: center; }
+.md-primary, .md-ghost { padding: 9px 20px; border-radius: 999px; font-weight: 700; cursor: pointer; }
+.md-primary { background: #20a690; color: #fff; border: none; }
+.md-ghost { background: #fff; color: #374151; border: 1px solid #d9d5cc; }
+.md-primary:disabled, .md-ghost:disabled { opacity: .5; cursor: not-allowed; }
+
+.md-ava { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.md-ava--initial { display: grid; place-items: center; background: #5f9bb2; color: #fff; font-weight: 700; }
+.md-user-info { display: grid; }
+.md-user-info small { color: #6b7280; }
+.md-user .md-status { margin-left: auto; }
+
+.md-log { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.md-log li { background: #fff; border: 1px solid #e7e3d8; border-radius: 12px; padding: 10px 14px; display: grid; gap: 2px; font-size: 14px; }
+.md-log em { color: #6b7280; font-size: 13px; }
+.md-log small { color: #9ca3af; }
+
+.md-state { color: #6b7280; text-align: center; padding: 20px 0; }
+.md-error { color: crimson; margin: 0; font-size: 13px; }
+
+.post-head .rp-btn { margin-left: auto; }
+.comment-meta .rp-btn { padding: 2px 4px; }

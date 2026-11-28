@@ -1,5 +1,5 @@
 import './LeftSidebar.css'
-import { Route, Briefcase, CalendarCheck, Inbox, Star } from 'lucide-react'
+import { Route, Briefcase, CalendarCheck, Inbox, Star,} from 'lucide-react'
 
 
 const GRADIENTS = ['g1', 'g2', 'g3', 'g4', 'g5']
@@ -92,6 +92,7 @@ const NAV = [
   { icon: Icons.globe, label: 'Communautés', section: 'communities' },
   { icon: Icons.mail, label: 'Messages', section: 'messages' },
   { icon: Icons.bookmark, label: 'Enregistrés', section: 'saved' },
+
 ]
 
 function LeftSidebar({ user, stats = { trips: 0, upcoming: 0 }, section = 'feed', onNavigate }) {

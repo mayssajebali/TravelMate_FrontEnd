@@ -23,7 +23,7 @@ const ROLES = [
 ]
 /* ---------- petits composants ---------- */
 
-function Field({ id, label, type = 'text', value, onChange, error, ...rest }) {
+export function Field({ id, label, type = 'text', value, onChange, error, ...rest }) {
   const [show, setShow] = useState(false)
   const isPass = type === 'password'
   return (
@@ -51,7 +51,7 @@ function Field({ id, label, type = 'text', value, onChange, error, ...rest }) {
   )
 }
 
-function Stickers() {
+export function Stickers() {
   const p = { viewBox: '0 0 100 100', 'aria-hidden': true }
   const s = { stroke: '#3B3A6B', strokeWidth: 3, strokeLinejoin: 'round' }
   return (

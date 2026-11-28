@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { createReview, deleteReview, getReviews, getToken, me } from '../../Api'
 import StarRating from './StarRating'
 import './Reviews.css'
+import ReportButton from '../Moderation/ReportButton'
 
 function Avatar({ name, url }) {
   return url ? (
@@ -112,6 +113,7 @@ export default function ReviewSection({ targetType, targetId }) {
             {userId === r.author_id && (
               <button className="rv-delete" onClick={() => handleDelete(r.id)}>Supprimer</button>
             )}
+            {userId !== r.author_id && <ReportButton targetType="review" targetId={r.id} />}
           </div>
         ))}
       </div>

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { getMateSuggestions, toggleFollow } from '../../Api'
 import './MatesPage.css'
 import { MessageCircle } from 'lucide-react'
+import ReportButton from '../Moderation/ReportButton'
 
 const LEVELS = [
   { value: 20, label: 'Compatibles (20 %+)' },
@@ -78,6 +79,8 @@ function MateCard({ m, followed, busy, onFollow, onMessage }) {
           aria-label={`Écrire à ${m.full_name}`} onClick={() => onMessage?.(m.id)}>
           <MessageCircle size={18} strokeWidth={1.8} />
         </button>
+
+        <ReportButton targetType="user" targetId={m.id} compact />
       </div>
     </article>
   )

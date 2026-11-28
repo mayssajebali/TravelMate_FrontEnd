@@ -1,0 +1,32 @@
+/* boutons de choix : même esprit que .tm-btn (Auth.css) */
+.tm-scene .tm-choice {
+  display: flex; align-items: center; gap: 14px; width: 100%; text-align: left;
+  padding: 16px 18px; border: 0; border-radius: 18px; color: #3B3A6B;
+  font: 500 16px Fredoka, system-ui, sans-serif; cursor: pointer; margin-top: 14px;
+  transition: transform .12s, box-shadow .12s;
+}
+.tm-choice--rose { background: var(--rose); box-shadow: 0 6px 0 color-mix(in srgb, var(--rose) 60%, #3B3A6B 40%); }
+.tm-choice--mint { background: var(--mint); box-shadow: 0 6px 0 color-mix(in srgb, var(--mint) 60%, #3B3A6B 40%); }
+.tm-choice:hover { transform: translateY(-1px); }
+.tm-choice:active { transform: translateY(5px); box-shadow: 0 1px 0 #3B3A6B66; }
+.tm-choice-icon {
+  width: 50px; height: 50px; border-radius: 14px; background: #ffffffaa;
+  display: grid; place-items: center; flex-shrink: 0;
+}
+.tm-choice-body { display: grid; gap: 1px; }
+.tm-choice-body b { font-size: 20px; font-weight: 600; }
+.tm-choice-body small { font-size: 13px; font-weight: 400; opacity: .85; }
+
+/* lien discret « Changer de profil » */
+.tm-scene .tm-linkbtn {
+  background: none; border: 0; padding: 0; margin: 14px auto 0; display: block;
+  color: var(--a-deep); font: 500 14px Fredoka, system-ui, sans-serif; cursor: pointer;
+}
+.tm-linkbtn:hover { text-decoration: underline; }
+
+/* bouton de retour affiché au-dessus de l'écran des voyageurs */
+.ag-float-back {
+  position: fixed; top: 14px; left: 14px; z-index: 1000; padding: 8px 16px; border-radius: 999px;
+  border: 2px solid #D9D6F0; background: #FFFDF8; color: #3B3A6B;
+  font: 500 14px Fredoka, system-ui, sans-serif; cursor: pointer; box-shadow: 0 3px 8px rgba(59, 58, 107, .15);
+}
